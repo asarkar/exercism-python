@@ -29,30 +29,15 @@ while (( $# > 0 )); do
    esac
 done
 
-manifests=()
-if [[ -z "$1" ]]; then
-	manifests=(**/*_test.py)
-else
-	manifests+=("$1"/*_test.py)
+bin_dir=""
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	bin_dir="./venv/bin/"
 fi
 
-green='\033[1;32m'
-no_color='\033[0m'
-for m in "${manifests[@]}"; do
-	name="$(dirname "$(readlink -f "$m")")"
-	name="$(basename "$name")"
+if (( no_test == 0 )); then
+  "$bin_dir"pytest $1
+fi
 
-	printf "Project dir: %b%s%b\n" "$green" "$name" "$no_color"
-
-	if (( no_test == 0 )); then
-	  PYTHONPATH="$name" python3 -m unittest -v "$m"
-	fi
-
-	if (( no_lint == 0 )); then
-		if [[ -x "$(command -v flake8)" ]]; then
-			flake8
-		else
-			printf "flake8 not found\n"
-		fi
-	fi
-done
+if (( no_lint == 0 )); then
+  "$bin_dir"flake8 $1
+fi
