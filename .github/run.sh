@@ -34,10 +34,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	bin_dir="./venv/bin/"
 fi
 
+basedir="${1:-.}"
+
 if (( no_test == 0 )); then
-  "$bin_dir"pytest $1
+  "$bin_dir"pytest "$basedir"
 fi
 
 if (( no_lint == 0 )); then
-  "$bin_dir"flake8 $1
+  "$bin_dir"flake8 "$basedir"
+  "$bin_dir"pylint "$basedir"/**/*.py
 fi
