@@ -112,7 +112,8 @@ def singleton_ingredients(dishes: list[set[str]], intersection: set[str]) -> set
     """Determine which `dishes` have a singleton ingredient (an ingredient that only appears once across dishes).
 
     :param dishes: list - of ingredient sets.
-    :param intersection: constant - can be one of `<CATEGORY>_INTERSECTIONS` constants imported from `sets_categories_data.py`.
+    :param intersection: constant - can be one of `<CATEGORY>_INTERSECTIONS` constants imported from
+    `sets_categories_data.py`.
     :return: set - containing singleton ingredients.
 
     Each dish is represented by a `set` of its ingredients.
