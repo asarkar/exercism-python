@@ -45,6 +45,6 @@ if (( no_lint == 0 )); then
   "$bin_dir"pylint \
   --score n \
   --ignore-paths '^.*_test.py$' \
-  --disable C0103,C0104,C0114,C0116 \
+  --disable C0103,C0104,C0114,C0115,C0116 \
   "$basedir"/**/*.py
 fi
