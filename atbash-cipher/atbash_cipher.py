@@ -1,14 +1,17 @@
 def encode(plain_text: str) -> str:
-    cipher = xcode(plain_text)
-    chunk_size = 5
-    return ' '.join([cipher[i:i + chunk_size] for i in range(0, len(cipher), chunk_size)])
+    cipher = __xcode(plain_text)
+    return ' '.join(__chunks(cipher, 5))
+
+
+def __chunks(text: str, n: int) -> list[str]:
+    return [text[i:i + n] for i in range(0, len(text), n)]
 
 
 def decode(ciphered_text: str) -> str:
-    return xcode(ciphered_text)
+    return __xcode(ciphered_text)
 
 
-def xcode(text: str) -> str:
+def __xcode(text: str) -> str:
     xs = []
     for ch in text.lower():
         if ch.islower():
