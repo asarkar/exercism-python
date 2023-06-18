@@ -2,11 +2,9 @@ import re
 
 
 def answer(question: str) -> int:
-    p = re.compile(r'([^0-9\-]+)(-?\d+)')
-    it = p.finditer(question)
     result = None
     i = 0
-    for m in it:
+    for m in re.finditer(r'([^0-9\-]+)(-?\d+)', question):
         if len(m.groups()) != 2:
             raise ValueError('syntax error')
         op = m.group(1).strip()
@@ -33,7 +31,9 @@ def answer(question: str) -> int:
     # then it's a 'syntax error', else 'unknown operation'.
     if i != len(question) - 1:
         w = question[i:-1].strip()
-        if w in {'What is', 'plus', 'minus', 'multiplied by', 'divided by'}:
+        terms = r'What\sis|plus|minus|multiplied\sby|divided\sby'
+        m = re.match(rf'^(?:{terms}\s*)+$', w)
+        if m:
             raise ValueError('syntax error')
 
         raise ValueError('unknown operation')

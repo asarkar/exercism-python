@@ -26,7 +26,7 @@ def rectangles(strings: list[str]) -> int:
         pluses = [m.start() for m in re.finditer('\\+', s)]
         for left_col, rt_col in itertools.combinations(pluses, 2):
             if re.fullmatch(r'\+[+-]*\+', s[left_col: rt_col + 1]):
-                corners[left_col][rt_col - left_col].append(row)
+                corners[left_col][rt_col - left_col + 1].append(row)
 
     num_rect = 0
     for col, segments in corners.items():
@@ -36,7 +36,7 @@ def rectangles(strings: list[str]) -> int:
         for length, rows in segments.items():
             for (top_row, bottom_row) in itertools.combinations(rows, 2):
                 cols = [
-                    f'{strings[row][col]}{strings[row][col + length]}'
+                    f'{strings[row][col]}{strings[row][col + length - 1]}'
                     for row in range(top_row, bottom_row + 1)
                 ]
                 if re.fullmatch(r'\+[+|]*\+', ''.join(cols)):
