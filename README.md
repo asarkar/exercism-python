@@ -15,7 +15,6 @@ Feel free to open issues for questions, comments, or suggestions.
 * [Having fun with dataclasses and abstract base classes](https://ivergara.github.io/ABC-and-dataclasses.html)
 * [Building a simple State Machine in Python](https://dev.to/karn/building-a-simple-state-machine-in-python)
 * [Python 3 Patterns, Recipes and Idioms: StateMachine](https://python-3-patterns-idioms-test.readthedocs.io/en/latest/StateMachine.html)
-* 
 
 ## License
 
