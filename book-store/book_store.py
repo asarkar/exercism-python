@@ -32,7 +32,7 @@ DISCOUNTS = [0, 0, 40, 80, 160, 200]
 # the combinations before iterating on them.
 def __bag_books(freq: list[int], memo: dict[tuple[int, ...], int]) -> int:
     # freq=[0, 1, 2] and freq=[2, 0, 1] have the same cost.
-    key = tuple(sorted([x for x in freq if x > 0]))
+    key = tuple(sorted(x for x in freq if x > 0))
     if key in memo:
         return memo[key]
 

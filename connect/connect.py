@@ -12,7 +12,7 @@ class ConnectGame:
         if any(self.__bfs(o, player) for o in top_os):
             return player
         player = 'X'
-        left_xs = [(r, 0) for r in range(len(self.field)) if self.field[r][0] == player]
+        left_xs = ((r, 0) for r in range(len(self.field)) if self.field[r][0] == player)
         if any(self.__bfs(x, player) for x in left_xs):
             return player
         return ''

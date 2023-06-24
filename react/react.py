@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import itertools
-import sys
 from collections import deque
 from abc import ABC
 from typing import Callable
@@ -24,48 +23,26 @@ class Cell(ABC):
         return self._value
 
 
+# pylint: disable=R0903
 class InputCell(Cell):
     @Cell.value.setter
     def value(self, value: int) -> None:
         """
         Iteratively updates the compute cells that depend on this input cell.
-        The catch here is to update the dependencies of a cell before updating it.
-        To do that, we use a distance array populated by BFS. Then, all cells
-        at the same distance are processed together. See the 'dist' function
-        for an example.
+        The catch here is to update the dependencies of a compute cell _before_
+        updating it. We do that using a distance array populated by BFS and
+        by maximizing the distance function. What we are after is the _maximum_
+        length of the path from a compute cell to this input cell.
+        For example, in the graph below, both m3 and m4 are connected to
+        cells of distance 1, but m4 is dependent on m3, and hence, must
+        be updated after m3. m4 may initially be discovered from m1, and
+        its distance set to 2, but will be later updated to 3 when we pop
+        m3 from the queue and look at its children.
 
-        :param value: new value
-        :return: nothing
-        """
-        self._value = value
+        It may be tempting to think that we can do a transitive reduction (TR)
+        of the graph, but the TR for the below graph is the same as itself.
+        https://en.wikipedia.org/wiki/Transitive_reduction
 
-        distance: dict[int, (int, Cell)] = {id(self): (0, self)}
-        q: deque[Cell] = deque([self])
-        while q:
-            cell = q.popleft()
-            for child in cell.children:
-                x = id(child)
-                if x not in distance:
-                    q.append(child)
-
-                dist = min(distance.get(x, (sys.maxsize, child))[0], distance[id(cell)][0] + 1)
-                distance[x] = (dist, child)
-
-        for dist, group in itertools.groupby(sorted(distance.values(), key=InputCell.dist), key=InputCell.dist):
-            if dist == 0:  # Input cell
-                continue
-            for _, child in group:
-                values = [distance[id(d)][1].value for d in child.dependencies]
-                child.compute_value(values)
-
-    @staticmethod
-    def dist(x: (int, Cell)) -> int:
-        """
-        Returns the distance from the input cell. For cells at the same distance,
-        uses the number of dependencies as a second factor. For example, both
-        m3 and m4 have the same distance (=2) below according to BFS. In this
-        case, we supplement the distance function by considering the number
-        of outgoing edges.
                             ┌────┐
              ┌─────────────►│  i │◄──────────────────┐
              │              └────┘                   │
@@ -92,34 +69,60 @@ class InputCell(Cell):
         └───────────┘                                m3
             m4
 
-        :param x: 2-tuple of initial distance and cell
-        :return: distance from the input cell
+        :param value: new value
+        :return: nothing
         """
-        return 0 if isinstance(x[1], InputCell) else x[0] + len(x[1].dependencies)
+        self._value = value
+
+        distance: dict[int, (int, Cell)] = {id(self): (0, self)}
+        q: deque[Cell] = deque([self])
+        while q:
+            cell = q.popleft()
+            for child in cell.children:
+                x = id(child)
+                if x not in distance:
+                    q.append(child)
+
+                dist = max(
+                    distance.get(x, (-1, child))[0],
+                    distance[id(cell)][0] + 1
+                )
+                distance[x] = (dist, child)
+
+        for dist, group in itertools.groupby(
+                sorted(distance.values(), key=lambda x: x[0]),
+                key=lambda x: x[0]
+        ):
+            if dist == 0:  # Input cell
+                continue
+            for _, child in group:
+                child.compute_value()
 
 
 class ComputeCell(Cell):
-    def __init__(self, dependencies: list[InputCell | ComputeCell], compute: Callable[[[int]], int]):
+    def __init__(
+            self,
+            dependencies: list[InputCell | ComputeCell],
+            compute: Callable[[[int]], int],
+    ):
         super().__init__()
         self._compute = compute
         self._callbacks = set()
-        self.dependencies = dependencies
-        values = []
+        self._dependencies = dependencies
         for cell in dependencies:
             # Create a bidirectional link.
             cell.children.append(self)
-            values.append(cell.value)
 
-        self.compute_value(values)
+        self.compute_value()
 
-    def add_callback(self, callback) -> None:
+    def add_callback(self, callback: Callable[[int], None]) -> None:
         self._callbacks.add(callback)
 
-    def remove_callback(self, callback) -> None:
+    def remove_callback(self, callback: Callable[[int], None]) -> None:
         self._callbacks.discard(callback)
 
-    def compute_value(self, values: list[int]) -> None:
-        new_value = self._compute(values)
+    def compute_value(self) -> None:
+        new_value = self._compute([d.value for d in self._dependencies])
         if new_value != self._value:
             self._value = new_value
             for c in self._callbacks:
