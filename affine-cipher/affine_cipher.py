@@ -5,39 +5,39 @@ M = 26
 
 def encode(plain_text: str, a: int, b: int) -> str:
     if not __mmi(a, M):
-        raise ValueError('a and m must be coprime.')
+        raise ValueError("a and m must be coprime.")
 
     result = []
     i = 0
     for ch in plain_text:
         if c := __xcode(ch.lower(), lambda x: (a * x + b) % M):
             if i > 0 and (i % 5) == 0:
-                result.append(' ')
+                result.append(" ")
             result.append(c)
             i += 1
 
-    return ''.join(result)
+    return "".join(result)
 
 
 def decode(ciphered_text: str, a: int, b: int) -> str:
     m = __mmi(a, M)
     if not m:
-        raise ValueError('a and m must be coprime.')
+        raise ValueError("a and m must be coprime.")
     result = []
     for ch in ciphered_text:
         if c := __xcode(ch, lambda x: ((x - b) * m) % M):
             result.append(c)
 
-    return ''.join(result)
+    return "".join(result)
 
 
 def __xcode(ch: str, fn: Callable[[int], int]) -> str | None:
     if ch.islower():
-        x = ord(ch) - ord('a')
+        x = ord(ch) - ord("a")
         i = fn(x)
         if i < 0:
             i += M
-        return chr(i + ord('a'))
+        return chr(i + ord("a"))
     if ch.isdigit():
         return ch
     return None
@@ -81,7 +81,7 @@ def __mmi(a: int, b: int) -> int | None:
     i = y if a == smaller else x
     if i < 0:
         i += larger
-    assert (a * i) % b == 1, f'failed check (a->{a} * {i}<-mmi) % {b}<-b == 1'
+    assert (a * i) % b == 1, f"failed check (a->{a} * {i}<-mmi) % {b}<-b == 1"
     return i
 
 

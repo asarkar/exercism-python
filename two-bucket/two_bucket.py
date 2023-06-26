@@ -1,8 +1,8 @@
 from collections import namedtuple, deque
 from enum import Enum, auto
 
-BucketStats = namedtuple('BucketStats', ['num_moves', 'goal_bucket', 'other_bucket_capacity'])
-Move = namedtuple('Move', ['capacity1', 'capacity2', 'action'])
+BucketStats = namedtuple("BucketStats", ["num_moves", "goal_bucket", "other_bucket_capacity"])
+Move = namedtuple("Move", ["capacity1", "capacity2", "action"])
 
 
 class Action(Enum):
@@ -17,7 +17,7 @@ class Action(Enum):
 def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> BucketStats:
     explored = set()
     frontier = deque()
-    if start_bucket == 'one':
+    if start_bucket == "one":
         initial_move = Move(capacity1, 0, Action.FILL_1)
         forbidden_move = (0, capacity2)
     else:
@@ -30,9 +30,9 @@ def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> Buc
         path = frontier.popleft()
         cap1, cap2, _ = path[-1]
         if cap1 == goal:
-            return BucketStats(len(path), 'one', cap2)
+            return BucketStats(len(path), "one", cap2)
         if cap2 == goal:
-            return BucketStats(len(path), 'two', cap1)
+            return BucketStats(len(path), "two", cap1)
 
         for move in __next_moves(cap1, cap2, capacity1, capacity2):
             m = (move[0], move[1])
@@ -46,12 +46,7 @@ def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> Buc
     raise ValueError("Can't do it.")
 
 
-def __next_moves(
-        capacity1: int,
-        capacity2: int,
-        max_capacity1: int,
-        max_capacity2: int
-) -> list[Move]:
+def __next_moves(capacity1: int, capacity2: int, max_capacity1: int, max_capacity2: int) -> list[Move]:
     states = []
 
     if capacity1 > 0:

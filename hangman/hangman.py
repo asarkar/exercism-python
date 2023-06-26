@@ -2,9 +2,9 @@
 # Change the values as you see fit
 from collections import defaultdict
 
-STATUS_WIN = 'win'
-STATUS_LOSE = 'lose'
-STATUS_ONGOING = 'ongoing'
+STATUS_WIN = "win"
+STATUS_LOSE = "lose"
+STATUS_ONGOING = "ongoing"
 
 
 # At each turn a player guesses a character;
@@ -18,14 +18,14 @@ class Hangman:
     def __init__(self, word: str) -> None:
         self.remaining_guesses = 9
         self.status = STATUS_ONGOING
-        self.masked_word = ['_'] * len(word)
+        self.masked_word = ["_"] * len(word)
         self.index_map = defaultdict(list)
-        for (i, ch) in enumerate(word):
+        for i, ch in enumerate(word):
             self.index_map[ch].append(i)
 
     def guess(self, char: str) -> None:
         if self.status != STATUS_ONGOING:
-            raise ValueError('The game has already ended.')
+            raise ValueError("The game has already ended.")
         if char in self.index_map:
             for i in self.index_map.pop(char):
                 self.masked_word[i] = char
@@ -37,7 +37,7 @@ class Hangman:
                 self.status = STATUS_LOSE
 
     def get_masked_word(self) -> str:
-        return ''.join(self.masked_word)
+        return "".join(self.masked_word)
 
     def get_status(self) -> str:
         return self.status

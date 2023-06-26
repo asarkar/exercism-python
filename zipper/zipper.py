@@ -14,14 +14,17 @@ class Node:
     def from_tree(tree) -> Node | None:
         if tree is None:
             return None
-        node = Node(tree['value'])
-        node.left = Node.from_tree(tree['left'])
-        node.right = Node.from_tree(tree['right'])
+        node = Node(tree["value"])
+        node.left = Node.from_tree(tree["left"])
+        node.right = Node.from_tree(tree["right"])
         return node
 
     def to_tree(self) -> dict:
-        return {'value': self.value, 'left': self.left and self.left.to_tree(),
-                'right': self.right and self.right.to_tree()}
+        return {
+            "value": self.value,
+            "left": self.left and self.left.to_tree(),
+            "right": self.right and self.right.to_tree(),
+        }
 
 
 class Direction(Enum):
@@ -36,6 +39,7 @@ class Crumb:
     the direction taken to get to the focus node
     (left or right), and the other subtree.
     """
+
     value: int
     direction: Direction
     node: Optional[Node] = None
@@ -57,8 +61,9 @@ class Zipper:
     in the spirit of true functional programming
     (long live Haskell!).
     """
+
     def __init__(self, node: Node, breadcrumbs: Breadcrumbs = None):
-        assert node, 'node must not be None'
+        assert node, "node must not be None"
         self.breadcrumbs = breadcrumbs or []
         self.node = node
 
@@ -74,7 +79,10 @@ class Zipper:
 
     def left(self) -> Zipper | None:
         if self.node.left:
-            return Zipper(self.node.left, self.breadcrumbs + [Crumb(self.value(), Direction.LEFT, self.node.right)])
+            return Zipper(
+                self.node.left,
+                self.breadcrumbs + [Crumb(self.value(), Direction.LEFT, self.node.right)],
+            )
         return None
 
     def set_left(self, node) -> Zipper:
@@ -82,7 +90,10 @@ class Zipper:
 
     def right(self) -> Zipper | None:
         if self.node.right:
-            return Zipper(self.node.right, self.breadcrumbs + [Crumb(self.value(), Direction.RIGHT, self.node.left)])
+            return Zipper(
+                self.node.right,
+                self.breadcrumbs + [Crumb(self.value(), Direction.RIGHT, self.node.left)],
+            )
         return None
 
     def set_right(self, node) -> Zipper:

@@ -13,10 +13,10 @@ class Clock:
         return (base - x) if x < 0 else x
 
     def __repr__(self) -> str:
-        return f'Clock({self.hr}, {self.min})'
+        return f"Clock({self.hr}, {self.min})"
 
     def __str__(self) -> str:
-        return f'{self.hour:02}:{self.minutes:02}'
+        return f"{self.hour:02}:{self.minutes:02}"
 
     def __eq__(self, other) -> bool:
         return str(self) == str(other)

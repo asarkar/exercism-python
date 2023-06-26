@@ -12,7 +12,7 @@ class ComplexNumber:
         return self.real == other.real and self.imaginary == other.imaginary
 
     def __repr__(self) -> str:
-        return f'ComplexNumber({self.real}, {self.imaginary})'
+        return f"ComplexNumber({self.real}, {self.imaginary})"
 
     def __add__(self, other) -> ComplexNumber:
         if isinstance(other, ComplexNumber):

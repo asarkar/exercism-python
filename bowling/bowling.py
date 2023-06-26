@@ -12,9 +12,9 @@ class BowlingGame:
 
     def roll(self, pins: int) -> None:
         if self.__is_complete():
-            raise ValueError('game is complete')
+            raise ValueError("game is complete")
         if pins < 0:
-            raise ValueError('invalid pins')
+            raise ValueError("invalid pins")
 
         if not self.frames or self.frames[-1].is_complete():
             frame = Frame()
@@ -22,19 +22,19 @@ class BowlingGame:
             frame = self.frames.pop()
 
         if frame.score() + pins > 10:
-            raise ValueError('not enough pins left')
+            raise ValueError("not enough pins left")
 
         frame.append(pins)
         self.frames.append(frame)
 
     def score(self) -> int:
         if not self.__is_complete():
-            raise ValueError('game is not complete')
+            raise ValueError("game is not complete")
 
         score = 0
         for i, f in enumerate(self.frames[:10]):
             if f.score() == 10 and len(f) == 1:
-                s = sum([t for fr in self.frames[i + 1:] for t in fr][:2])
+                s = sum([t for fr in self.frames[i + 1 :] for t in fr][:2])
             elif f.score() == 10:
                 s = self.frames[i + 1][0]
             else:

@@ -18,7 +18,7 @@ def check_sentence_ending(sentence: str) -> bool:
     :return: bool - return True if punctuated correctly with period, False otherwise.
     """
 
-    return sentence.endswith('.')
+    return sentence.endswith(".")
 
 
 def clean_up_spacing(sentence: str) -> str:
@@ -41,4 +41,4 @@ def replace_word_choice(sentence: str, old_word: str, new_word: str):
     """
 
     # str.replace would also replace substrings
-    return re.sub(rf'\b{old_word}\b', new_word, sentence)
+    return re.sub(rf"\b{old_word}\b", new_word, sentence)

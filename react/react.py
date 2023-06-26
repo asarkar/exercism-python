@@ -10,13 +10,13 @@ from typing import Callable
 class Cell(ABC):
     def __init__(self, value: int = None):
         if self.__class__ == Cell:
-            raise TypeError('Cannot instantiate abstract class.')
+            raise TypeError("Cannot instantiate abstract class.")
 
         self._value = value
         self.children: list[ComputeCell] = []
 
     def __repr__(self) -> str:
-        return f'{type(self).__name__}({self._value})'
+        return f"{type(self).__name__}({self._value})"
 
     @property
     def value(self) -> int:
@@ -83,16 +83,10 @@ class InputCell(Cell):
                 if x not in distance:
                     q.append(child)
 
-                dist = max(
-                    distance.get(x, (-1, child))[0],
-                    distance[id(cell)][0] + 1
-                )
+                dist = max(distance.get(x, (-1, child))[0], distance[id(cell)][0] + 1)
                 distance[x] = (dist, child)
 
-        for dist, group in itertools.groupby(
-                sorted(distance.values(), key=lambda x: x[0]),
-                key=lambda x: x[0]
-        ):
+        for dist, group in itertools.groupby(sorted(distance.values(), key=lambda x: x[0]), key=lambda x: x[0]):
             if dist == 0:  # Input cell
                 continue
             for _, child in group:
@@ -101,9 +95,9 @@ class InputCell(Cell):
 
 class ComputeCell(Cell):
     def __init__(
-            self,
-            dependencies: list[InputCell | ComputeCell],
-            compute: Callable[[[int]], int],
+        self,
+        dependencies: list[InputCell | ComputeCell],
+        compute: Callable[[[int]], int],
     ):
         super().__init__()
         self._compute = compute

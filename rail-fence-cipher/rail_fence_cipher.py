@@ -6,7 +6,7 @@ def encode(message: str, num_rails: int) -> str:
     rails = [[] for _ in range(num_rails)]
     # Populate the rails.
     __zigzag(message, num_rails, lambda i, ch: rails[i].append(ch))
-    return ''.join(''.join(r) for r in rails)
+    return "".join("".join(r) for r in rails)
 
 
 def decode(encoded_message: str, num_rails: int) -> str:
@@ -18,14 +18,14 @@ def decode(encoded_message: str, num_rails: int) -> str:
         encoded_message,
         num_rails,
         # pylint: disable=C2801
-        lambda i, _: rail_lengths.__setitem__(i, rail_lengths[i] + 1)
+        lambda i, _: rail_lengths.__setitem__(i, rail_lengths[i] + 1),
     )
 
     # Populate the rails.
     rails = []
     k = 0
     for i in rail_lengths:
-        txt = encoded_message[k: k + i]
+        txt = encoded_message[k : k + i]
         rails.append(deque([*txt]))
         k += i
 
@@ -36,13 +36,9 @@ def decode(encoded_message: str, num_rails: int) -> str:
     # As we read from a rail, we pop() the first character.
     # This is akin to merging k sorted lists.
     message = []
-    __zigzag(
-        encoded_message,
-        num_rails,
-        lambda x, _: message.append(rails[x].popleft())
-    )
+    __zigzag(encoded_message, num_rails, lambda x, _: message.append(rails[x].popleft()))
 
-    return ''.join(message)
+    return "".join(message)
 
 
 def __zigzag(txt: str, num_rails: int, fn: Callable[[int, str], Any]) -> None:

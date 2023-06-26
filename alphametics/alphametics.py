@@ -1,13 +1,13 @@
 def __parse(puzzle: str) -> tuple[list[str], str]:
-    xs, result = [piece.strip() for piece in puzzle.split('==')]
-    equation = [piece.strip()[::-1] for piece in xs.split('+')]
+    xs, result = [piece.strip() for piece in puzzle.split("==")]
+    equation = [piece.strip()[::-1] for piece in xs.split("+")]
     return equation, result[::-1]
 
 
 def solve(puzzle: str) -> dict[str, int]:  # noqa: C901
     equation, result = __parse(puzzle)
     if any(len(line) > len(result) for line in puzzle):
-        raise ValueError('invalid equation')
+        raise ValueError("invalid equation")
     non_zero_letters = {line[-1] for line in equation}
     non_zero_letters.add(result[-1])
 
@@ -43,8 +43,7 @@ def solve(puzzle: str) -> dict[str, int]:  # noqa: C901
             return False
         # Result
         if assigned:
-            return ((solution[letter] == sum_digit) and
-                    can_solve(0, col + 1, carry // 10, solution))
+            return (solution[letter] == sum_digit) and can_solve(0, col + 1, carry // 10, solution)
 
         used = sum_digit in solution.values()
         if used or (sum_digit == 0 and letter in non_zero_letters):

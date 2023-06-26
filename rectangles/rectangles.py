@@ -23,9 +23,9 @@ def rectangles(strings: list[str]) -> int:
     # of length 2 that start at column 2, and these sides
     # are at rows 0, 2, and 4, respectively.
     for row, s in enumerate(strings):
-        pluses = [m.start() for m in re.finditer('\\+', s)]
+        pluses = [m.start() for m in re.finditer("\\+", s)]
         for left_col, rt_col in itertools.combinations(pluses, 2):
-            if re.fullmatch(r'\+[+-]*\+', s[left_col: rt_col + 1]):
+            if re.fullmatch(r"\+[+-]*\+", s[left_col : rt_col + 1]):
                 corners[left_col][rt_col - left_col + 1].append(row)
 
     num_rect = 0
@@ -34,12 +34,11 @@ def rectangles(strings: list[str]) -> int:
         # and check if the vertical columns are connected.
         # If yes, we got ourselves a rectangle.
         for length, rows in segments.items():
-            for (top_row, bottom_row) in itertools.combinations(rows, 2):
+            for top_row, bottom_row in itertools.combinations(rows, 2):
                 cols = [
-                    f'{strings[row][col]}{strings[row][col + length - 1]}'
-                    for row in range(top_row, bottom_row + 1)
+                    f"{strings[row][col]}{strings[row][col + length - 1]}" for row in range(top_row, bottom_row + 1)
                 ]
-                if re.fullmatch(r'\+[+|]*\+', ''.join(cols)):
+                if re.fullmatch(r"\+[+|]*\+", "".join(cols)):
                     num_rect += 1
 
     return num_rect

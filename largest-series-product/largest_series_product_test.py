@@ -42,17 +42,13 @@ class LargestSeriesProductTest(unittest.TestCase):
         with self.assertRaises(ValueError) as err:
             largest_product("123", 4)
         self.assertEqual(type(err.exception), ValueError)
-        self.assertEqual(
-            err.exception.args[0], "span must be smaller than string length"
-        )
+        self.assertEqual(err.exception.args[0], "span must be smaller than string length")
 
     def test_rejects_empty_string_and_nonzero_span(self):
         with self.assertRaises(ValueError) as err:
             largest_product("", 1)
         self.assertEqual(type(err.exception), ValueError)
-        self.assertEqual(
-            err.exception.args[0], "span must be smaller than string length"
-        )
+        self.assertEqual(err.exception.args[0], "span must be smaller than string length")
 
     def test_rejects_invalid_character_in_digits(self):
         with self.assertRaises(ValueError) as err:

@@ -5,7 +5,7 @@ def find(search_list: list[int], value: int) -> int:
 def __find(nums: list[int], value: int, lo: int, hi: int) -> int:
     mid = lo + (hi - lo + 1) // 2
     if hi < lo:
-        raise ValueError('value not in array')
+        raise ValueError("value not in array")
     if nums[mid] == value:
         return mid
     if nums[mid] > value:

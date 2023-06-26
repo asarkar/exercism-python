@@ -1,4 +1,3 @@
-
 # To avoid repeated multiplications, we maintain a running product.
 # Whenever we exceed the length of a span, we divide the product
 # by the outgoing number, provided the outgoing number is not zero.
@@ -7,9 +6,9 @@
 # the product when we get past a zero.
 def largest_product(txt: str, span: int) -> int:
     if span > len(txt):
-        raise ValueError('span must be smaller than string length')
+        raise ValueError("span must be smaller than string length")
     if span < 0:
-        raise ValueError('span must not be negative')
+        raise ValueError("span must not be negative")
 
     pdt = 1
     max_pdt = start = 0
@@ -17,7 +16,7 @@ def largest_product(txt: str, span: int) -> int:
 
     for i, ch in enumerate(txt):
         if not ch.isdigit():
-            raise ValueError('digits input must only contain digits')
+            raise ValueError("digits input must only contain digits")
         k = int(ch)
         if k == 0:
             last_index_of_zero = i

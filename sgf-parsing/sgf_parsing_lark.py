@@ -19,6 +19,7 @@ class SgfTree:
 # Letter   		= 'A'..'Z'
 # PropVal  		= '[' Text ']'
 
+
 def parse(input_string: str) -> SgfTree:
     sgf_grammar = r"""
         tree: "(" node+ tree* ")"
@@ -29,21 +30,21 @@ def parse(input_string: str) -> SgfTree:
 
         %import common.UCASE_LETTER
     """
-    parser = Lark(sgf_grammar, start='tree', parser='lalr')
+    parser = Lark(sgf_grammar, start="tree", parser="lalr")
     try:
         return SgfTransformer().transform(parser.parse(input_string))[0]
     except UnexpectedCharacters as uc:
-        if 'PROP_ID' in uc.allowed or 'PROP_VAL' in uc.allowed:
-            raise ValueError('property must be in uppercase') from uc
-        raise ValueError('unexpected') from uc
+        if "PROP_ID" in uc.allowed or "PROP_VAL" in uc.allowed:
+            raise ValueError("property must be in uppercase") from uc
+        raise ValueError("unexpected") from uc
     except UnexpectedToken as ut:
-        if ut.expected == {'SEMICOLON'}:
-            raise ValueError('tree with no nodes') from ut
-        if ut.expected == {'LPAR'}:
-            raise ValueError('tree missing') from ut
-        if ut.expected == {'PROP_VAL'}:
-            raise ValueError('properties without delimiter') from ut
-        raise ValueError('unexpected') from ut
+        if ut.expected == {"SEMICOLON"}:
+            raise ValueError("tree with no nodes") from ut
+        if ut.expected == {"LPAR"}:
+            raise ValueError("tree missing") from ut
+        if ut.expected == {"PROP_VAL"}:
+            raise ValueError("properties without delimiter") from ut
+        raise ValueError("unexpected") from ut
 
 
 class SgfTransformer(Transformer):
@@ -64,14 +65,14 @@ class SgfTransformer(Transformer):
         for c in s[1:-1]:
             if escaped:
                 _ = txt.pop()
-            if escaped and c == '\n':
-                txt.append('')
+            if escaped and c == "\n":
+                txt.append("")
             else:
-                txt.append(' ' if c == '\t' else c)
+                txt.append(" " if c == "\t" else c)
 
             # '\' isn't escape character if it's been escaped
-            escaped = c == '\\' and not escaped
-        return ''.join(txt)
+            escaped = c == "\\" and not escaped
+        return "".join(txt)
 
     @staticmethod
     def property(prop: list[Token]) -> Properties:
@@ -94,7 +95,7 @@ class SgfTransformer(Transformer):
             if isinstance(nodes[i + 1], SgfTree):
                 nodes[i].children.append(nodes[i + 1])
             else:
-                nodes[i].children.extend([child[0] for child in nodes[i + 1:]])
+                nodes[i].children.extend([child[0] for child in nodes[i + 1 :]])
                 break
 
         return nodes[:1]

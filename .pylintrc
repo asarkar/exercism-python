@@ -1,22 +1,9 @@
-###########################################################################
-# https://github.com/exercism/python-analyzer/blob/main/lib/common/.pylintrc
+# This Pylint rcfile contains a best-effort configuration to uphold the
+# best-practices and style described in the Google Python style guide:
+#   https://google.github.io/styleguide/pyguide.html
 #
-# This common pylintrc file contains a best-effort configuration to uphold the
-# best-practices and style for the Python track exercises of exercism.org.
-#
-# This file is used when there is no exercise-specific pylintrc.
-# When there is an exercise-specific pylintrc, this config file is ignored
-# in favor of the exercise-specific config.
-#
-# As a default, all warnings and checks are "turned on", although that may
-# change in the future, as we decide which rules to enforce for all exercises.
-#
-# **A note on single letter variable names.**
-# See this Stack Overflow discussion:
-# https://stackoverflow.com/questions/21833872/why-does-pylint-object-to-single-character-variable-names
-# for why this is enforced.
-###########################################################################
-
+# Its canonical open-source location is:
+#   https://google.github.io/styleguide/pylintrc
 
 [MASTER]
 
@@ -58,55 +45,107 @@ confidence=
 # can either give multiple identifiers separated by comma (,) or put this
 # option multiple times (only on the command line, not in the configuration
 # file where it should appear only once).You can also use "--disable=all" to
-# disable everything first and then re-enable specific checks. For example, if
+# disable everything first and then reenable specific checks. For example, if
 # you want to run only the similarities checker, you can use "--disable=all
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
-#  inconsistent-return-statements,
-# disable=arguments-differ,
-#        attribute-defined-outside-init,
-#        duplicate-code,
-#        filter-builtin-not-iterating,
-#        fixme,
-#        global-statement,
-#        implicit-str-concat-in-sequence,
-#        import-error,
-#        import-self,
-#        input-builtin,
-#        locally-disabled,
-#        misplaced-comparison-constant,
-#        missing-class-docstring,
-#        missing-function-docstring,
-#        missing-module-docstring,
-#        no-absolute-import,
-#        no-else-break,
-#        no-else-continue,
-#        no-else-raise,
-#        no-else-return,
-#        no-member,
-#        no-name-in-module,
-#        no-self-use,
-#        raising-string,
-#        relative-import,
-#        round-builtin,
-#        signature-differs,
-#        suppressed-message,
-#        too-few-public-methods,
-#        too-many-ancestors,
-#        too-many-arguments,
-#        too-many-boolean-expressions,
-#        too-many-branches,
-#        too-many-instance-attributes,
-#        too-many-locals,
-#        too-many-nested-blocks,
-#        too-many-public-methods,
-#        too-many-return-statements,
-#        too-many-statements,
-#        unused-argument,
-#        unused-import,
-#        useless-suppression
-disable=trailing-whitespace,missing-final-newline
+disable=abstract-method,
+        apply-builtin,
+        arguments-differ,
+        attribute-defined-outside-init,
+        backtick,
+        bad-option-value,
+        basestring-builtin,
+        buffer-builtin,
+        c-extension-no-member,
+        consider-using-enumerate,
+        cmp-builtin,
+        cmp-method,
+        coerce-builtin,
+        coerce-method,
+        delslice-method,
+        div-method,
+        duplicate-code,
+        eq-without-hash,
+        execfile-builtin,
+        file-builtin,
+        filter-builtin-not-iterating,
+        fixme,
+        getslice-method,
+        global-statement,
+        hex-method,
+        idiv-method,
+        implicit-str-concat,
+        import-error,
+        import-self,
+        import-star-module-level,
+        inconsistent-return-statements,
+        input-builtin,
+        intern-builtin,
+        invalid-str-codec,
+        locally-disabled,
+        long-builtin,
+        long-suffix,
+        map-builtin-not-iterating,
+        misplaced-comparison-constant,
+        missing-function-docstring,
+        metaclass-assignment,
+        next-method-called,
+        next-method-defined,
+        no-absolute-import,
+        no-else-break,
+        no-else-continue,
+        no-else-raise,
+        no-else-return,
+        no-init,  # added
+        no-member,
+        no-name-in-module,
+        no-self-use,
+        nonzero-method,
+        oct-method,
+        old-division,
+        old-ne-operator,
+        old-octal-literal,
+        old-raise-syntax,
+        parameter-unpacking,
+        print-statement,
+        raising-string,
+        range-builtin-not-iterating,
+        raw_input-builtin,
+        rdiv-method,
+        reduce-builtin,
+        relative-import,
+        reload-builtin,
+        round-builtin,
+        setslice-method,
+        signature-differs,
+        standarderror-builtin,
+        suppressed-message,
+        sys-max-int,
+        too-few-public-methods,
+        too-many-ancestors,
+        too-many-arguments,
+        too-many-boolean-expressions,
+        too-many-branches,
+        too-many-instance-attributes,
+        too-many-locals,
+        too-many-nested-blocks,
+        too-many-public-methods,
+        too-many-return-statements,
+        too-many-statements,
+        trailing-newlines,
+        unichr-builtin,
+        unicode-builtin,
+        unnecessary-pass,
+        unpacking-in-except,
+        useless-else-on-loop,
+        useless-object-inheritance,
+        useless-suppression,
+        using-cmp-argument,
+        wrong-import-order,
+        xrange-builtin,
+        zip-builtin-not-iterating,
 
 
 [REPORTS]
@@ -114,7 +153,7 @@ disable=trailing-whitespace,missing-final-newline
 # Set the output format. Available formats are text, parseable, colorized, msvs
 # (visual studio) and html. You can also give a reporter class, eg
 # mypackage.mymodule.MyReporterClass.
-# output-format=colorized
+output-format=text
 
 # Tells whether to display a full report or only the messages
 reports=no
@@ -134,17 +173,17 @@ evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / stateme
 [BASIC]
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=main,_, item, element, index
+good-names=main,_
 
 # Bad variable names which should always be refused, separated by a comma
-bad-names=x,y,i,l,L,O,j,m,n,k
+bad-names=
 
 # Colon-delimited sets of names that determine each other's naming style when
 # the name regexes allow several styles.
 name-group=
 
 # Include a hint for the correct naming format with invalid-name
-include-naming-hint=y
+include-naming-hint=no
 
 # List of decorators that produce properties, such as abc.abstractproperty. Add
 # to this list to register other decorators that produce valid properties.
@@ -154,7 +193,7 @@ property-classes=abc.abstractproperty,cached_property.cached_property,cached_pro
 function-rgx=^(?:(?P<exempt>setUp|tearDown|setUpModule|tearDownModule)|(?P<camel_case>_?[A-Z][a-zA-Z0-9]*)|(?P<snake_case>_?[a-z][a-z0-9_]*))$
 
 # Regular expression matching correct variable names
-variable-rgx=^[a-z_][a-z0-9_]{1,30}$
+variable-rgx=^[a-z][a-z0-9_]*$
 
 # Regular expression matching correct constant names
 const-rgx=^(_?[A-Z][A-Z0-9_]*|__[a-z0-9_]+__|_?[a-z][a-z0-9_]*)$
@@ -163,7 +202,7 @@ const-rgx=^(_?[A-Z][A-Z0-9_]*|__[a-z0-9_]+__|_?[a-z][a-z0-9_]*)$
 attr-rgx=^_{0,2}[a-z][a-z0-9_]*$
 
 # Regular expression matching correct argument names
-argument-rgx=^[a-z][a-z0-9_]{1,30}$
+argument-rgx=^[a-z][a-z0-9_]*$
 
 # Regular expression matching correct class attribute names
 class-attribute-rgx=^(_?[A-Z][A-Z0-9_]*|__[a-z0-9_]+__|_?[a-z][a-z0-9_]*)$
@@ -234,19 +273,14 @@ ignore-long-lines=(?x)(
 # else.
 single-line-if-stmt=yes
 
-# List of optional constructs for which whitespace checking is disabled. `dict-
-# separator` is used to allow tabulation in dicts, etc.: {1  : 1,\n222: 2}.
-# `trailing-comma` allows a space between comma and closing bracket: (a, ).
-# `empty-line` allows space-only lines.
-# As of Pylint 2.6+, this option has been disabled, so this is commented out.
-# no-space-check=
-
 # Maximum number of lines in a module
 max-module-lines=99999
 
-# String used as indentation unit. Currently 4, consistent with
-# PEP 8.
-indent-string='    '
+# String used as indentation unit.  The internal Google style guide mandates 2
+# spaces.  Google's externaly-published style guide says 4, consistent with
+# PEP 8.  Here, we use 2 spaces, for conformity with many open-sourced Google
+# projects (like TensorFlow).
+indent-string='  '
 
 # Number of spaces of indent required inside a hanging  or continued line.
 indent-after-paren=4
@@ -283,7 +317,7 @@ additional-builtins=
 
 # List of strings which can identify a callback function by name. A callback
 # name must start or end with one of those strings.
-callbacks=
+callbacks=cb_,_cb
 
 # List of qualified module names which can have objects that can redefine
 # builtins.
@@ -294,7 +328,7 @@ redefining-builtins-modules=six,six.moves,past.builtins,future.builtins,functool
 
 # Logging modules to check that the string format arguments are in logging
 # function parameter format
-logging-modules=logging,absl.logging
+logging-modules=logging,absl.logging,tensorflow.io.logging
 
 
 [SIMILARITIES]

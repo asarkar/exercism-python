@@ -36,7 +36,7 @@ def __palindrome(r: range, op: Callable[[int, int], bool]) -> tuple[int, list[li
     :return: palindrome and it's factors, if found
     """
     if len(r) == 0:
-        raise ValueError('min must be <= max')
+        raise ValueError("min must be <= max")
     palindrome = None
     factors = []
     for left in r:

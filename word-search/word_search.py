@@ -2,7 +2,7 @@ from collections import defaultdict, namedtuple
 from typing import Optional
 from enum import Enum, auto
 
-Point = namedtuple('Point', ['row', 'col'])
+Point = namedtuple("Point", ["row", "col"])
 
 
 class Direction(Enum):
@@ -35,8 +35,9 @@ class WordSearch:
         return None
 
     # pylint: disable=R0913
-    def __search_end(self, word: str, i: int, coord: Point,
-                     visited: set[Point], direction: Direction) -> Optional[Point]:
+    def __search_end(
+        self, word: str, i: int, coord: Point, visited: set[Point], direction: Direction
+    ) -> Optional[Point]:
         if i >= len(word) or coord in visited:
             return None
         if i == (len(word) - 1):
@@ -52,17 +53,19 @@ class WordSearch:
             (Direction.NE, (row - 1, col + 1)),
             (Direction.SE, (row + 1, col + 1)),
             (Direction.NW, (row - 1, col - 1)),
-            (Direction.SW, (row + 1, col - 1))
+            (Direction.SW, (row + 1, col - 1)),
         ]
 
-        neighbors = [c for c
-                     in candidates
-                     if c[1] != coord
-                     and 0 <= c[1][0] < len(self.puzzle)
-                     and 0 <= c[1][1] < len(self.puzzle[c[1][0]])
-                     and self.puzzle[c[1][0]][c[1][1]] == word[i + 1]
-                     and c[1] not in visited
-                     and direction in {None, c[0]}]
+        neighbors = [
+            c
+            for c in candidates
+            if c[1] != coord
+            and 0 <= c[1][0] < len(self.puzzle)
+            and 0 <= c[1][1] < len(self.puzzle[c[1][0]])
+            and self.puzzle[c[1][0]][c[1][1]] == word[i + 1]
+            and c[1] not in visited
+            and direction in {None, c[0]}
+        ]
         for d, (r, c) in neighbors:
             if p := self.__search_end(word, i + 1, Point(r, c), visited, d):
                 return p

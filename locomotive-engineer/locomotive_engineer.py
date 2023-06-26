@@ -28,7 +28,7 @@ def add_missing_stops(route: dict[str, str | list[str]], **stops) -> dict[str, s
     :param: arbitrary number of stops.
     :return: dict - updated route dictionary.
     """
-    route['stops'] = list(stops.values())
+    route["stops"] = list(stops.values())
     return route
 
 

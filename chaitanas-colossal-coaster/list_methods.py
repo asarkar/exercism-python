@@ -2,10 +2,10 @@
 
 
 def add_me_to_the_queue(
-        express_queue: list[str],
-        normal_queue: list[str],
-        ticket_type: int,
-        person_name: str
+    express_queue: list[str],
+    normal_queue: list[str],
+    ticket_type: int,
+    person_name: str,
 ) -> list[str]:
     """Add a person to the 'express' or 'normal' queue depending on the ticket number.
 

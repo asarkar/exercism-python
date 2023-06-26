@@ -33,8 +33,7 @@ def compare_records(azara_record: tuple[str, str], rui_record: tuple[str, tuple[
 
 
 def create_record(
-        azara_record: tuple[str, str],
-        rui_record: tuple[str, tuple[str, str], str]
+    azara_record: tuple[str, str], rui_record: tuple[str, tuple[str, str], str]
 ) -> str | tuple[str, str, str, tuple[str, str], str]:
     """Combine the two record types (if possible) and create a combined record group.
 
@@ -45,7 +44,7 @@ def create_record(
 
     if compare_records(azara_record, rui_record):
         return azara_record + rui_record
-    return 'not a match'
+    return "not a match"
 
 
 def clean_up(combined_record_group: tuple[tuple[str, str, str, tuple[str, str], str]]) -> str:
@@ -59,4 +58,4 @@ def clean_up(combined_record_group: tuple[tuple[str, str, str, tuple[str, str], 
     (see HINTS.md for an example).
     """
 
-    return '\n'.join(str((x[0], x[2], x[3], x[4])) for x in combined_record_group) + '\n'
+    return "\n".join(str((x[0], x[2], x[3], x[4])) for x in combined_record_group) + "\n"

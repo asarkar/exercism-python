@@ -4,6 +4,7 @@ class BufferFullException(BufferError):
     message: explanation of the error.
 
     """
+
     def __init__(self, message: str) -> None:
         self.message = message
 
@@ -14,6 +15,7 @@ class BufferEmptyException(BufferError):
     message: explanation of the error.
 
     """
+
     def __init__(self, message: str) -> None:
         self.message = message
 
@@ -30,6 +32,7 @@ class BufferEmptyException(BufferError):
 # Basically, the read ptr points to the oldest element, and the
 # write ptr to the next free slot.
 
+
 class CircularBuffer:
     def __init__(self, capacity: int) -> None:
         self.data = [None] * capacity
@@ -38,7 +41,7 @@ class CircularBuffer:
 
     def read(self) -> str:
         if self.__is_empty():
-            raise BufferEmptyException('Circular buffer is empty')
+            raise BufferEmptyException("Circular buffer is empty")
         element = self.data[self.read_idx]
         self.read_idx = (self.read_idx + 1) % self.capacity
         self.size -= 1
@@ -46,7 +49,7 @@ class CircularBuffer:
 
     def write(self, element: str) -> None:
         if self.__is_full():
-            raise BufferFullException('Circular buffer is full')
+            raise BufferFullException("Circular buffer is full")
 
         self.data[self.write_idx] = element
         self.write_idx = (self.write_idx + 1) % self.capacity

@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+addopts = '--strict-markers'
+markers = [
+    'task: A concept exercise task.'
+]
+
+[tool.black]
+line-length = 120

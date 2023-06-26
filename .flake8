@@ -1,9 +1,5 @@
 [flake8]
+extend-ignore = E203
 exclude = .git,.github,__pycache__,.pytest_cache,venv,*_test.py
 max-complexity = 10
 max-line-length = 120
-
-[tool:pytest]
-addopts = --strict-markers
-markers =
-    task: A concept exercise task.

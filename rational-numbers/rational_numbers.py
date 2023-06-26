@@ -14,7 +14,7 @@ class Rational:
         return self.numer == other.numer and self.denom == other.denom
 
     def __repr__(self):
-        return f'{self.numer}/{self.denom}'
+        return f"{self.numer}/{self.denom}"
 
     def __add__(self, other: Rational) -> Rational:
         numer = self.numer * other.denom + other.numer * self.denom
@@ -33,7 +33,7 @@ class Rational:
 
     def __truediv__(self, other: Rational) -> Rational:
         if other.numer == 0:
-            raise ZeroDivisionError('division not defined when divisor is zero')
+            raise ZeroDivisionError("division not defined when divisor is zero")
 
         numer = self.numer * other.denom
         denom = other.numer * self.denom
@@ -49,7 +49,7 @@ class Rational:
             return Rational(self.numer ** abs(power), self.denom ** abs(power))
 
         # GCD of floats is not defined.
-        raise ValueError('exponentiation to a floating-point number is not defined')
+        raise ValueError("exponentiation to a floating-point number is not defined")
 
     def __rpow__(self, base: int | float) -> float:
         return pow(base, self.numer / self.denom)

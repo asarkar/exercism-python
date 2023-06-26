@@ -14,8 +14,12 @@ class MeteredFile(io.BufferedRandom):
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, exc_type: Type[BaseException] | None,
-                 exc_val: BaseException | None, exc_tb: TracebackType | None) -> bool | None:
+    def __exit__(
+        self,
+        exc_type: Type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> bool | None:
         """
         Exit the runtime context and return a Boolean flag indicating
         if any exception that occurred should be suppressed.
@@ -82,8 +86,12 @@ class MeteredSocket:
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, exc_type: Type[BaseException] | None,
-                 exc_val: BaseException | None, exc_tb: TracebackType | None) -> bool | None:
+    def __exit__(
+        self,
+        exc_type: Type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> bool | None:
         """
         Exit the runtime context and return a Boolean flag indicating
         if any exception that occurred should be suppressed.

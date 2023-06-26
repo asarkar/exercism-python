@@ -79,7 +79,7 @@ def poker_hand(hand: str) -> tuple[PokerHand, list[int]]:  # noqa: C901, pylint:
     else:
         result = (PokerHand.HIGH_CARD, ranks)
 
-    assert result, f'num_ranks={num_ranks}'
+    assert result, f"num_ranks={num_ranks}"
     return result
 
 
@@ -93,13 +93,13 @@ def rank_map(hand: str) -> dict[int, set[str]]:
     result: dict[int, set[str]] = defaultdict(set)
     for w in hand.split():
         rank, suite = w[:-1], w[-1]
-        if rank == 'A':
+        if rank == "A":
             r = 14
-        elif rank == 'K':
+        elif rank == "K":
             r = 13
-        elif rank == 'Q':
+        elif rank == "Q":
             r = 12
-        elif rank == 'J':
+        elif rank == "J":
             r = 11
         else:
             r = int(rank)

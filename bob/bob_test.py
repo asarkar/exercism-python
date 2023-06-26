@@ -18,9 +18,7 @@ class BobTest(unittest.TestCase):
         self.assertEqual(response("FCECDFCAAB"), "Whoa, chill out!")
 
     def test_asking_a_question(self):
-        self.assertEqual(
-            response("Does this cryogenic chamber make me look fat?"), "Sure."
-        )
+        self.assertEqual(response("Does this cryogenic chamber make me look fat?"), "Sure.")
 
     def test_asking_a_numeric_question(self):
         self.assertEqual(response("You are, what, like 15?"), "Sure.")
@@ -32,14 +30,10 @@ class BobTest(unittest.TestCase):
         self.assertEqual(response("Hi there!"), "Whatever.")
 
     def test_using_acronyms_in_regular_speech(self):
-        self.assertEqual(
-            response("It's OK if you don't want to go work for NASA."), "Whatever."
-        )
+        self.assertEqual(response("It's OK if you don't want to go work for NASA."), "Whatever.")
 
     def test_forceful_question(self):
-        self.assertEqual(
-            response("WHAT'S GOING ON?"), "Calm down, I know what I'm doing!"
-        )
+        self.assertEqual(response("WHAT'S GOING ON?"), "Calm down, I know what I'm doing!")
 
     def test_shouting_numbers(self):
         self.assertEqual(response("1, 2, 3 GO!"), "Whoa, chill out!")
@@ -87,17 +81,13 @@ class BobTest(unittest.TestCase):
         self.assertEqual(response("         hmmmmmmm..."), "Whatever.")
 
     def test_ending_with_whitespace(self):
-        self.assertEqual(
-            response("Okay if like my  spacebar  quite a bit?   "), "Sure."
-        )
+        self.assertEqual(response("Okay if like my  spacebar  quite a bit?   "), "Sure.")
 
     def test_other_whitespace(self):
         self.assertEqual(response("\n\r \t"), "Fine. Be that way!")
 
     def test_non_question_ending_with_whitespace(self):
-        self.assertEqual(
-            response("This is a statement ending with whitespace      "), "Whatever."
-        )
+        self.assertEqual(response("This is a statement ending with whitespace      "), "Whatever.")
 
 
 if __name__ == "__main__":

@@ -13,13 +13,12 @@ class Tree:
         return self.label < other.label
 
     def __eq__(self, other: Tree) -> bool:
-        return (self.label == other.label and
-                sorted(self.children) == sorted(other.children))
+        return self.label == other.label and sorted(self.children) == sorted(other.children)
 
     def from_pov(self, from_node: str) -> Tree:
         if tree := self.pov(None, from_node):
             return tree
-        raise ValueError('Tree could not be reoriented')
+        raise ValueError("Tree could not be reoriented")
 
     # For example, if we have 0 - 1 - 2, and we are reorienting
     # on node 2, then node 2 is now the parent of node 1.
@@ -42,7 +41,7 @@ class Tree:
     def path_to(self, from_node: str, to_node: str) -> list[str]:
         if path := self.from_pov(from_node).path(to_node):
             return path
-        raise ValueError('No path found')
+        raise ValueError("No path found")
 
     def path(self, target: str) -> list[str]:
         if self.label == target:

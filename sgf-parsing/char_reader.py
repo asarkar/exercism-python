@@ -4,7 +4,7 @@ class CharReader:
         self.idx = 0
 
     def __repr__(self) -> str:
-        return f'(txt={self.txt}, next={self.peek()})'
+        return f"(txt={self.txt}, next={self.peek()})"
 
     def next(self) -> str:
         char = self.peek()
@@ -12,7 +12,7 @@ class CharReader:
         return char
 
     def peek(self) -> str:
-        return '' if self.is_eof() else self.txt[self.idx]
+        return "" if self.is_eof() else self.txt[self.idx]
 
     def is_eof(self) -> bool:
         return self.idx == len(self.txt)

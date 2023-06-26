@@ -17,22 +17,22 @@ class BankAccount:
     def open(self) -> None:
         with self._lock:
             if self._balance is not None:
-                raise ValueError('account already open')
+                raise ValueError("account already open")
             self._balance = 0
 
     def deposit(self, amount: int) -> None:
         if amount <= 0:
-            raise ValueError('amount must be greater than 0')
+            raise ValueError("amount must be greater than 0")
         with self._lock:
             self.__ensure_open()
             self._balance += amount
 
     def withdraw(self, amount):
         if amount <= 0:
-            raise ValueError('amount must be greater than 0')
+            raise ValueError("amount must be greater than 0")
         with self._lock:
             if self.get_balance() < amount:
-                raise ValueError('amount must be less than balance')
+                raise ValueError("amount must be less than balance")
             self._balance -= amount
 
     def close(self):
@@ -42,4 +42,4 @@ class BankAccount:
 
     def __ensure_open(self) -> None:
         if self._balance is None:
-            raise ValueError('account not open')
+            raise ValueError("account not open")

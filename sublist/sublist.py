@@ -25,7 +25,7 @@ def sublist(list_one: list[int], list_two: list[int]) -> int:
     larger = list_one if x > y else list_two
     n = len(smaller)
     for i in range(len(larger) - n + 1):
-        if smaller == larger[i: n + i]:
+        if smaller == larger[i : n + i]:
             if x < y:
                 return SUBLIST
             if x > y:

@@ -3,8 +3,8 @@ from typing import TypeVar, Callable
 
 # pylint: disable=W0622
 
-U = TypeVar('U')
-T = TypeVar('T')
+U = TypeVar("U")
+T = TypeVar("T")
 
 
 def append(list1: list[T], list2: list[T]) -> list[T]:

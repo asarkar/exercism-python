@@ -85,9 +85,7 @@ class MockSock:
         if bufsize is None:
             raise TypeError("'NoneType' object cannot be interpreted as an integer")
         if not isinstance(flags, int):
-            raise TypeError(
-                "an integer is required (got type {})".format(type(flags).__name__)
-            )
+            raise TypeError("an integer is required (got type {})".format(type(flags).__name__))
         self.flags = flags
         if self.__exception is not None:
             raise self.__exception
@@ -100,9 +98,7 @@ class MockSock:
         if self.__closed:
             raise OSError(errno.EBADF, os.strerror(errno.EBADF))
         if not isinstance(flags, int):
-            raise TypeError(
-                "an integer is required (got type {})".format(type(flags).__name__)
-            )
+            raise TypeError("an integer is required (got type {})".format(type(flags).__name__))
         self.flags = flags
         if self.__chunk is None:
             return self._sender.write(data)
@@ -129,9 +125,7 @@ class SuperMock:
             return self.mock_object
 
     def __repr__(self):
-        return "<SuperMock at {} with mock object: {!r}>".format(
-            hex(id(self)), self.mock_object
-        )
+        return "<SuperMock at {} with mock object: {!r}>".format(hex(id(self)), self.mock_object)
 
     mock_object = None
     init_called = 0

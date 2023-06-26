@@ -3,16 +3,16 @@ import math
 
 # https://github.com/asarkar/exercism-rust/blob/master/perfect-numbers/src/lib.rs
 def classify(num: int) -> str:
-    """ A perfect number equals the sum of its positive divisors.
+    """A perfect number equals the sum of its positive divisors.
 
     :param number: int a positive integer
     :return: str the classification of the input integer
     """
     if num < 1:
-        raise ValueError('Classification is only possible for positive integers.')
+        raise ValueError("Classification is only possible for positive integers.")
 
     if num == 2:
-        return 'deficient'
+        return "deficient"
 
     x = int(math.sqrt(num))
     s = 1
@@ -34,7 +34,7 @@ def classify(num: int) -> str:
     s -= num
 
     if s < num:
-        return 'deficient'
+        return "deficient"
     if s > num:
-        return 'abundant'
-    return 'perfect'
+        return "abundant"
+    return "perfect"

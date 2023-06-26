@@ -27,14 +27,10 @@ def score(dice: list[int], category: int) -> int:
         result = functools.reduce(
             lambda acc, x: acc + x[0] * x[1],
             filter(lambda x: x[1] in {2, 3}, freq.items()),
-            0
+            0,
         )
     elif category == FOUR_OF_A_KIND:
-        result = functools.reduce(
-            lambda _, x: x[0] * 4,
-            filter(lambda x: x[1] >= 4, freq.items()),
-            0
-        )
+        result = functools.reduce(lambda _, x: x[0] * 4, filter(lambda x: x[1] >= 4, freq.items()), 0)
     elif category == LITTLE_STRAIGHT and n == 5 and 6 not in freq:
         result = 30
     elif category == BIG_STRAIGHT and n == 5 and 1 not in freq:

@@ -8,7 +8,7 @@ def add_prefix_un(word: str) -> str:
     :return: str - of root word prepended with 'un'.
     """
 
-    return 'un' + word
+    return "un" + word
 
 
 def make_word_groups(vocab_words: list[str]) -> str:
@@ -27,7 +27,7 @@ def make_word_groups(vocab_words: list[str]) -> str:
     produces the following string: 'en :: enclose :: enjoy :: enlighten'.
     """
     prefix, *rest = vocab_words
-    return ' :: '.join([prefix] + [prefix + w for w in rest])
+    return " :: ".join([prefix] + [prefix + w for w in rest])
 
 
 def remove_suffix_ness(word: str) -> str:
@@ -40,9 +40,9 @@ def remove_suffix_ness(word: str) -> str:
     """
 
     # Python >= 3.9
-    wrd = word.removesuffix('ness')
-    if len(wrd) > 1 and wrd[-2] not in {'a', 'e', 'i', 'o', 'u'} and wrd[-1] == 'i':
-        return wrd[:-1] + 'y'
+    wrd = word.removesuffix("ness")
+    if len(wrd) > 1 and wrd[-2] not in {"a", "e", "i", "o", "u"} and wrd[-1] == "i":
+        return wrd[:-1] + "y"
     return wrd
 
 
@@ -58,4 +58,4 @@ def adjective_to_verb(sentence: str, index: int) -> str:
 
     # Remove period
     words = sentence[:-1].split()
-    return words[index] + 'en'
+    return words[index] + "en"

@@ -1,4 +1,3 @@
-
 # pylint: disable=R0903
 class TreeNode:
     def __init__(self, data: str, left=None, right=None):
@@ -7,7 +6,7 @@ class TreeNode:
         self.right = right
 
     def __repr__(self):
-        return f'TreeNode(data={self.data}, left={self.left}, right={self.right})'
+        return f"TreeNode(data={self.data}, left={self.left}, right={self.right})"
 
 
 class BinarySearchTree:

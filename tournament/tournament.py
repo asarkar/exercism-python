@@ -10,23 +10,25 @@ class Result:
         return self.wins * 3 + self.draws
 
     def __repr__(self) -> str:
-        return f'{self.name:<30} |{self.matches_played():>3} | {self.wins:>2} | ' \
-               f'{self.draws:>2} | {self.losses:>2} | {self.points():>2}'
+        return (
+            f"{self.name:<30} |{self.matches_played():>3} | {self.wins:>2} | "
+            f"{self.draws:>2} | {self.losses:>2} | {self.points():>2}"
+        )
 
 
 def tally(rows: list[str]) -> list[str]:
     results = {}
     for r in rows:
-        team1, team2, result = r.split(sep=';')
+        team1, team2, result = r.split(sep=";")
         if team1 not in results:
             results[team1] = Result(team1)
         if team2 not in results:
             results[team2] = Result(team2)
 
-        if result == 'win':
+        if result == "win":
             results[team1].wins += 1
             results[team2].losses += 1
-        elif result == 'loss':
+        elif result == "loss":
             results[team2].wins += 1
             results[team1].losses += 1
         else:

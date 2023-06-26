@@ -1,11 +1,25 @@
 from enum import Enum
 
-Color = Enum('Color', ['BLACK', 'BROWN', 'RED', 'ORANGE', 'YELLOW', 'GREEN', 'BLUE', 'VIOLET', 'GREY', 'WHITE'])
+Color = Enum(
+    "Color",
+    [
+        "BLACK",
+        "BROWN",
+        "RED",
+        "ORANGE",
+        "YELLOW",
+        "GREEN",
+        "BLUE",
+        "VIOLET",
+        "GREY",
+        "WHITE",
+    ],
+)
 
 
 def value(colors: list[str]) -> int:
     codes = [str(__color_code(clr)) for clr in colors[:2]]
-    return int(''.join(codes))
+    return int("".join(codes))
 
 
 def __color_code(color: str) -> int:

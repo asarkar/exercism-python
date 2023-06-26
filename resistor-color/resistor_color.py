@@ -1,6 +1,20 @@
 from enum import Enum
 
-Color = Enum('Color', ['BLACK', 'BROWN', 'RED', 'ORANGE', 'YELLOW', 'GREEN', 'BLUE', 'VIOLET', 'GREY', 'WHITE'])
+Color = Enum(
+    "Color",
+    [
+        "BLACK",
+        "BROWN",
+        "RED",
+        "ORANGE",
+        "YELLOW",
+        "GREEN",
+        "BLUE",
+        "VIOLET",
+        "GREY",
+        "WHITE",
+    ],
+)
 
 
 def color_code(color: str) -> int:

@@ -58,9 +58,7 @@ class AtbashCipherTest(unittest.TestCase):
         self.assertEqual(decode("vc vix    r hn"), "exercism")
 
     def test_decode_with_no_spaces(self):
-        self.assertEqual(
-            decode("zmlyhgzxovrhlugvmzhgvkkrmthglmv"), "anobstacleisoftenasteppingstone"
-        )
+        self.assertEqual(decode("zmlyhgzxovrhlugvmzhgvkkrmthglmv"), "anobstacleisoftenasteppingstone")
 
 
 if __name__ == "__main__":

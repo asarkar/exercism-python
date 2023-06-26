@@ -5,10 +5,10 @@ def is_valid(isbn: str) -> bool:
         if ch.isdigit():
             s += int(ch) * i
             i -= 1
-        elif ch == 'X' and i == 1:
+        elif ch == "X" and i == 1:
             s += 10
             i -= 1
-        elif ch != '-':
+        elif ch != "-":
             return False
 
     return s % 11 == 0 and i == 0

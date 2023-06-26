@@ -41,10 +41,16 @@ if (( no_test == 0 )); then
 fi
 
 if (( no_lint == 0 )); then
+	if [[ -z "${CI}" ]]; then
+	  "$bin_dir"black "$basedir"
+	else
+		"$bin_dir"black --check "$basedir"
+	fi
   "$bin_dir"flake8 "$basedir"
   "$bin_dir"pylint \
+  --rcfile ./.pylintrc \
   --score n \
   --ignore-patterns '^.*_test\.py$, ^test_.*\.py$' \
-  --disable C0103,C0104,C0114,C0115,C0116 \
+  --disable C0103,C0104,C0114,C0115,C0116,W0311 \
   "$basedir"/**/*.py
 fi

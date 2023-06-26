@@ -11,8 +11,8 @@ class StackUnderflowError(Exception):
 
 
 class Forth:
-    _ASCII_ALPHA = r'[A-Za-z]+'
-    _BIN_OP = r'[+\-*\\]'
+    _ASCII_ALPHA = r"[A-Za-z]+"
+    _BIN_OP = r"[+\-*\\]"
     WORD = rf"""
         ^  # assert position at the start
         :  # match literal ':'
@@ -24,8 +24,8 @@ class Forth:
         )
         \s+
     """
-    DEFN = r'([^;\s]+)'  # take until whitespace or ';'
-    NUM = r'-?\d+'  # signed integer
+    DEFN = r"([^;\s]+)"  # take until whitespace or ';'
+    NUM = r"-?\d+"  # signed integer
 
     def __init__(self, input_data: list[str]):
         self.stack: deque[int] = deque()
@@ -48,7 +48,7 @@ class Forth:
     # Parse ": word-name definition ;".
     @classmethod
     def parse_defn(cls, txt: str) -> Optional[tuple[str, list[str]]]:
-        if txt[0] != ':':
+        if txt[0] != ":":
             return None
         if m := re.match(cls.WORD, txt, re.VERBOSE):
             word = m.group(1)
@@ -58,7 +58,7 @@ class Forth:
                 defn.append(m.group(1))
             return word, defn
 
-        raise ValueError('illegal operation')
+        raise ValueError("illegal operation")
 
     def get_stack(self) -> list[int]:
         return list(reversed(self.stack))
@@ -76,8 +76,7 @@ class Forth:
         :return: nothing
         """
         self.defn_id += 1
-        self.defn[word.upper()].append(
-            (self.defn_id, [d.upper() for d in defn]))
+        self.defn[word.upper()].append((self.defn_id, [d.upper() for d in defn]))
 
     def resolve_defn(self, i: int, word: str) -> deque[str]:
         """
@@ -104,9 +103,7 @@ class Forth:
         w = word.upper()
         if w not in self.defn:
             return deque([w])
-        j, definitions = next(d for k
-                              in itertools.count(-1, -1)
-                              if (d := self.defn[w][k])[0] < i)
+        j, definitions = next(d for k in itertools.count(-1, -1) if (d := self.defn[w][k])[0] < i)
         result = deque()
         for k in range(-1, -len(definitions) - 1, -1):
             commands = self.resolve_defn(j, definitions[k])
@@ -126,43 +123,43 @@ class Forth:
 
     def run_bin_op(self, cmd: str) -> None:
         op = None
-        if cmd == '+':
+        if cmd == "+":
             op = operator.add
-        elif cmd == '-':
+        elif cmd == "-":
             op = operator.sub
-        elif cmd == '*':
+        elif cmd == "*":
             op = operator.mul
-        elif cmd == '/':
+        elif cmd == "/":
             op = operator.floordiv
         if op:
             if len(self.stack) < 2:
-                raise StackUnderflowError('Insufficient number of items in stack')
+                raise StackUnderflowError("Insufficient number of items in stack")
             x = self.stack.popleft()
             y = self.stack.popleft()
-            if cmd == '/' and x == 0:
-                raise ZeroDivisionError('divide by zero')
+            if cmd == "/" and x == 0:
+                raise ZeroDivisionError("divide by zero")
             self.stack.appendleft(op(y, x))
         else:
-            raise ValueError('undefined operation')
+            raise ValueError("undefined operation")
 
     def run_stack_op(self, cmd: str) -> None:
         try:
-            if cmd == 'OVER':
+            if cmd == "OVER":
                 x = self.stack.popleft()
                 y = self.stack[0]
                 self.stack.extendleft([x, y])
-            elif cmd == 'SWAP':
+            elif cmd == "SWAP":
                 x = self.stack.popleft()
                 y = self.stack.popleft()
                 self.stack.extendleft([x, y])
-            elif cmd == 'DUP':
+            elif cmd == "DUP":
                 self.stack.appendleft(self.stack[0])
-            elif cmd == 'DROP':
+            elif cmd == "DROP":
                 _ = self.stack.popleft()
             else:
-                raise ValueError('undefined operation')
+                raise ValueError("undefined operation")
         except IndexError as ie:
-            raise StackUnderflowError('Insufficient number of items in stack') from ie
+            raise StackUnderflowError("Insufficient number of items in stack") from ie
 
 
 def evaluate(input_data: list[str]) -> list[int]:

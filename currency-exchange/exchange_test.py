@@ -6,11 +6,11 @@ from exchange import (
     get_value_of_bills,
     get_number_of_bills,
     get_leftover_of_bills,
-    exchangeable_value)
+    exchangeable_value,
+)
 
 
 class CurrencyExchangeTest(unittest.TestCase):
-
     @pytest.mark.task(taskno=1)
     def test_exchange_money(self):
         input_data = [(100000, 0.8), (700000, 10.0)]
@@ -63,10 +63,14 @@ class CurrencyExchangeTest(unittest.TestCase):
             (1500, 0.84, 25, 40),
             (470000, 1050, 30, 10000000000),
             (470000, 0.00000009, 30, 700),
-            (425.33, 0.0009, 30, 700)]
+            (425.33, 0.0009, 30, 700),
+        ]
 
         output_data = [8568, 1400, 0, 4017094016600, 363300]
 
         for variant, (inputs, output_data) in enumerate(zip(inputs, output_data), start=1):
             with self.subTest(f"variation #{variant}", inputs=inputs, output_data=output_data):
-                self.assertEqual(exchangeable_value(inputs[0], inputs[1], inputs[2], inputs[3]), output_data)
+                self.assertEqual(
+                    exchangeable_value(inputs[0], inputs[1], inputs[2], inputs[3]),
+                    output_data,
+                )

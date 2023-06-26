@@ -12,5 +12,5 @@ import itertools
 #
 # https://exercism.org/tracks/python/exercises/transpose/solutions/paiv
 def transpose(text: str) -> str:
-    a = itertools.zip_longest(*text.splitlines(), fillvalue='$')
-    return '\n'.join(''.join(w).rstrip('$').replace('$', ' ') for w in a)
+    a = itertools.zip_longest(*text.splitlines(), fillvalue="$")
+    return "\n".join("".join(w).rstrip("$").replace("$", " ") for w in a)

@@ -28,7 +28,7 @@ def __encode(num: int) -> deque[int]:
         result.append(0)
     while num:
         # Mask (bitwise AND) with 0x7f = 127 = 0b1111111
-        s = num & 0x7f
+        s = num & 0x7F
         if fst:
             # Clear the 8th bit from the right
             # 0x80 = 128 = 0b10000000, ~128 = 0b01111111
@@ -47,7 +47,7 @@ def __encode(num: int) -> deque[int]:
 
 def decode(bytes_):
     if bytes_ and not __is_last_byte(bytes_[-1]):
-        raise ValueError('incomplete sequence')
+        raise ValueError("incomplete sequence")
 
     # Result is a list as there can be more sequences
     result = []
@@ -68,7 +68,7 @@ def decode(bytes_):
     #    Steps 1 through 3 are all happening within the line:
     #     ==>   num = (num << 7) | (b & 0x7f)   <==
     for b in bytes_:
-        num = (num << 7) | (b & 0x7f)
+        num = (num << 7) | (b & 0x7F)
         if __is_last_byte(b):
             result.append(num)
             num = 0

@@ -1,13 +1,15 @@
 """Functions for compiling dishes and ingredients for a catering company."""
 
 
-from sets_categories_data import (VEGAN,
-                                  VEGETARIAN,
-                                  KETO,
-                                  PALEO,
-                                  OMNIVORE,
-                                  ALCOHOLS,
-                                  SPECIAL_INGREDIENTS)
+from sets_categories_data import (
+    VEGAN,
+    VEGETARIAN,
+    KETO,
+    PALEO,
+    OMNIVORE,
+    ALCOHOLS,
+    SPECIAL_INGREDIENTS,
+)
 
 
 def clean_ingredients(dish_name: str, dish_ingredients: list[str]) -> tuple[str, set[str]]:
@@ -53,16 +55,16 @@ def categorize_dish(dish_name: str, dish_ingredients: list[str]) -> str:
     """
     ingredients = set(dish_ingredients)
     for name, category in [
-        ('VEGAN', VEGAN),
-        ('VEGETARIAN', VEGETARIAN),
-        ('PALEO', PALEO),
-        ('KETO', KETO),
-        ('OMNIVORE', OMNIVORE)
+        ("VEGAN", VEGAN),
+        ("VEGETARIAN", VEGETARIAN),
+        ("PALEO", PALEO),
+        ("KETO", KETO),
+        ("OMNIVORE", OMNIVORE),
     ]:
         if ingredients <= category:
-            return f'{dish_name}: {name}'
+            return f"{dish_name}: {name}"
 
-    return 'category not found'
+    return "category not found"
 
 
 def tag_special_ingredients(dish: tuple[str, list[str]]) -> tuple[str, set[str]]:

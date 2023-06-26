@@ -1,10 +1,10 @@
 from collections import deque, defaultdict
 
-WHITE = 'W'
-BLACK = 'B'
-NONE = ''
+WHITE = "W"
+BLACK = "B"
+NONE = ""
 
-BLANK = ' '
+BLANK = " "
 
 
 class Board:
@@ -53,7 +53,7 @@ class Board:
             if self.field[y][x] != BLANK:
                 return NONE, set()
             return self.__bfs((y, x))
-        raise ValueError('Invalid coordinate')
+        raise ValueError("Invalid coordinate")
 
     def territories(self) -> dict[str, set[tuple[int, int]]]:
         """Find the owners and the territories of the whole board
@@ -86,23 +86,16 @@ class Board:
                 (row - 1, col),
                 (row, col - 1),
                 (row, col + 1),
-                (row + 1, col)
+                (row + 1, col),
             ]
-            neighbors = [c for c
-                         in candidates
-                         if 0 <= c[0] < len(self.field) and
-                         0 <= c[1] < len(self.field[c[0]])]
-            colors = {c for x
-                      in neighbors
-                      if (c := self.field[x[0]][x[1]]) != BLANK}
+            neighbors = [c for c in candidates if 0 <= c[0] < len(self.field) and 0 <= c[1] < len(self.field[c[0]])]
+            colors = {c for x in neighbors if (c := self.field[x[0]][x[1]]) != BLANK}
             if len(colors) == 1 and color in {(c := colors.pop()), None}:
                 color = c
             else:
                 color = NONE
             self.field[row][col] = color
-            empties = [x for x
-                       in neighbors
-                       if self.field[x[0]][x[1]] == BLANK]
+            empties = [x for x in neighbors if self.field[x[0]][x[1]] == BLANK]
             q.extend(empties)
 
         return color, visited

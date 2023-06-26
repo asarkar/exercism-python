@@ -38,7 +38,7 @@ class LinkedList:
         :return: the element removed
         """
         if self.is_empty():
-            raise IndexError('List is empty')
+            raise IndexError("List is empty")
         self.size -= 1
         prev = self.tail.prev
         node = self.tail
@@ -57,7 +57,7 @@ class LinkedList:
         :return: the element removed
         """
         if self.is_empty():
-            raise IndexError('List is empty')
+            raise IndexError("List is empty")
         self.size -= 1
         nxt = self.head.nxt
         node = self.head
@@ -99,7 +99,7 @@ class LinkedList:
             node = node.nxt
 
         if not node:
-            raise ValueError('Value not found')
+            raise ValueError("Value not found")
 
         if node is self.head:
             self.shift()

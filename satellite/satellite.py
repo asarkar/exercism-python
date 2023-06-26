@@ -2,11 +2,11 @@ def tree_from_traversals(preorder: list[str], inorder: list[str]):
     pre = set(preorder)
     inorder_map = {x: i for i, x in enumerate(inorder)}
     if len(pre) != len(preorder) or len(inorder_map) != len(inorder):
-        raise ValueError('traversals must contain unique items')
+        raise ValueError("traversals must contain unique items")
     if len(pre) != len(inorder_map):
-        raise ValueError('traversals must have the same length')
+        raise ValueError("traversals must have the same length")
     if pre != inorder_map.keys():
-        raise ValueError('traversals must have the same elements')
+        raise ValueError("traversals must have the same elements")
     return __build(preorder, inorder_map, 0, 0, len(inorder) - 1)[0]
 
 
@@ -28,13 +28,13 @@ def __build(preorder: list[str], inorder_map: dict[str, int], i: int, lo: int, h
         return {}, -1
 
     val = preorder[i]
-    node = {'v': val, 'l': {}, 'r': {}}
+    node = {"v": val, "l": {}, "r": {}}
     if lo == hi:
         return node, i + 1
 
     j = inorder_map[val]
 
-    node['l'], x = __build(preorder, inorder_map, i + 1, lo, j - 1)
-    node['r'], y = __build(preorder, inorder_map, max(x, i + 1), j + 1, hi)
+    node["l"], x = __build(preorder, inorder_map, i + 1, lo, j - 1)
+    node["r"], y = __build(preorder, inorder_map, max(x, i + 1), j + 1, hi)
 
     return node, max(x, y)

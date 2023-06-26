@@ -1,8 +1,8 @@
 def steps(number: int) -> int:
     if number <= 0:
-        raise ValueError('Only positive integers are allowed')
+        raise ValueError("Only positive integers are allowed")
 
-    u_max = (2 ** 64 - 2) // 3
+    u_max = (2**64 - 2) // 3
     x = number
     count = 0
 
@@ -17,4 +17,4 @@ def steps(number: int) -> int:
 
     if x == 1:
         return count
-    raise ValueError('Collatz conjecture is disproved!')
+    raise ValueError("Collatz conjecture is disproved!")

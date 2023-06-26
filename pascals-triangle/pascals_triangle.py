@@ -1,6 +1,6 @@
 def rows(n: int) -> list[list[int]]:
     if n < 0:
-        raise ValueError('number of rows is negative')
+        raise ValueError("number of rows is negative")
     if n == 0:
         return []
     triangle = rows(n - 1)
