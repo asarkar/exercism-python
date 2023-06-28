@@ -1,8 +1,22 @@
 [tool.pytest.ini_options]
-addopts = '--strict-markers'
-markers = [
-    'task: A concept exercise task.'
+
+[tool.mypy]
+exclude = [
+    '^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$',
+    '.git',
+    '.github',
+    '.mypy_cache',
+    '__pycache__',
+    '.pytest_cache',
+    'venv'
 ]
+ignore_errors = 'False'
 
 [tool.black]
 line-length = 120
+extend-exclude = """
+/
+^(?:(?:[^/]+/)+(?:test_.*\\.py|.*_test\\.py))$
+| .github
+/
+"""

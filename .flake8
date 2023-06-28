@@ -1,5 +1,12 @@
 [flake8]
+# https://github.com/PyCQA/pycodestyle/issues/373
 extend-ignore = E203
-exclude = .git,.github,__pycache__,.pytest_cache,venv,*_test.py
+extend-exclude =
+    .github/,
+    .pytest_cache/,
+    .mypy_cache/,
+    venv/,
+    **/test_*.py,
+    **/*_test.py
 max-complexity = 10
 max-line-length = 120
