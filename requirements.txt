@@ -1,6 +1,6 @@
-flake8
-pylint
 pytest
+ruff
+mypy
 black
 parsy
 lark

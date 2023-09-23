@@ -2,7 +2,7 @@ from __future__ import annotations
 
 
 class Tree:
-    def __init__(self, label: str, children: list[Tree] = None) -> None:
+    def __init__(self, label: str, children: list[Tree] | None = None) -> None:
         self.label = label
         self.children = children or []
 
@@ -12,7 +12,9 @@ class Tree:
     def __lt__(self, other: Tree) -> bool:
         return self.label < other.label
 
-    def __eq__(self, other: Tree) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Tree):
+            return False
         return self.label == other.label and sorted(self.children) == sorted(other.children)
 
     def from_pov(self, from_node: str) -> Tree:

@@ -1,19 +1,24 @@
+from __future__ import annotations
+from typing import Optional
+from collections.abc import Iterator
+
+
 class Node:
     def __init__(self, val: int) -> None:
         self.val = val
-        self.nxt = None
+        self.nxt: Optional[Node] = None
 
-    def value(self):
+    def value(self) -> int:
         return self.val
 
-    def next(self):
+    def next(self) -> Optional[Node]:
         return self.nxt
 
 
 class LinkedList:
-    def __init__(self, values: list[int] = None) -> None:
+    def __init__(self, values: Optional[list[int]] = None) -> None:
         self.size = 0
-        self.fst: Node = None
+        self.fst: Optional[Node] = None
 
         if values:
             for v in values:
@@ -42,7 +47,7 @@ class LinkedList:
         self.size -= 1
         return n.value()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[int]:
         return self
 
     def __next__(self) -> int:
@@ -52,7 +57,7 @@ class LinkedList:
         self.fst = self.fst.nxt
         return x
 
-    def reversed(self):
+    def reversed(self) -> Iterator[int]:
         curr = self.fst
         values = []
         while curr:

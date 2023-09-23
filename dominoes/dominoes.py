@@ -12,13 +12,13 @@ class FaceValueMap:
             self.release(i)
 
     def acquire(self, i: int) -> None:
-        l, r = self.dominoes[i]
+        l, r = self.dominoes[i]  # noqa: E741
         self.map[l].remove(i)
         # If l = r, then 'i' is no longer in the set
         self.map[r].discard(i)
 
     def release(self, i: int) -> None:
-        l, r = self.dominoes[i]
+        l, r = self.dominoes[i]  # noqa: E741
         self.map[l].add(i)
         self.map[r].add(i)
 
@@ -28,7 +28,7 @@ class FaceValueMap:
     # 3. Should not contain duplicate indices.
     # 4. Should contain identical dominoes with unique indices.
     def candidates(self, i: int, left: bool) -> list[int]:
-        l, r = self.dominoes[i]
+        l, r = self.dominoes[i]  # noqa: E741
         side = l if left else r
         return [x for x in self.map[side] if x != i]
 
@@ -61,7 +61,7 @@ def can_chain(dominoes: list[Domino]) -> Optional[list[Domino]]:
         :param i: index of the domino
         :return: true if chaining is feasible, false otherwise
         """
-        l, r = dominoes[i]
+        l, r = dominoes[i]  # noqa: E741
         # Since we append new dominoes at the end,
         # if matched on the left side, a domino has
         # to be flipped.

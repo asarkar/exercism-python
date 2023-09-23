@@ -31,7 +31,7 @@ def clean_up_spacing(sentence: str) -> str:
     return sentence.strip()
 
 
-def replace_word_choice(sentence: str, old_word: str, new_word: str):
+def replace_word_choice(sentence: str, old_word: str, new_word: str) -> str:
     """Replace a word in the provided sentence with a new one.
 
     :param sentence: str - a sentence to replace words in.

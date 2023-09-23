@@ -1,7 +1,6 @@
 import itertools
 
 
-# pylint: disable=R0903
 class Luhn:
     def __init__(self, card_num: str) -> None:
         self.card_num = card_num

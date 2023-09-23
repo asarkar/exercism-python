@@ -58,7 +58,7 @@ class Parser:
         return SgfTree(self.parse_properties())
 
     def parse_properties(self) -> dict[str, list[str]]:
-        p = {}
+        p: dict[str, list[str]] = {}
         p_id = self.parse_id()
         if not p_id:
             return p
@@ -81,7 +81,7 @@ class Parser:
         if self.reader.next() != "[":
             raise ValueError("properties without delimiter")
 
-        txt = []
+        txt: list[str] = []
         escaped = False
         # Parse single character. There is a test that requires escaped
         # newline gets replaced with nothing, everything else is replaced

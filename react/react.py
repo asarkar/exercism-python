@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import itertools
+import typing
 from collections import deque
 from abc import ABC
 from typing import Callable
@@ -8,7 +9,7 @@ from typing import Callable
 
 # A cool community solution: https://exercism.org/tracks/python/exercises/react/solutions/rcardenes
 class Cell(ABC):
-    def __init__(self, value: int = None):
+    def __init__(self, value: int | None = None) -> None:
         if self.__class__ == Cell:
             raise TypeError("Cannot instantiate abstract class.")
 
@@ -19,13 +20,12 @@ class Cell(ABC):
         return f"{type(self).__name__}({self._value})"
 
     @property
-    def value(self) -> int:
+    def value(self) -> int | None:
         return self._value
 
 
-# pylint: disable=R0903
 class InputCell(Cell):
-    @Cell.value.setter
+    @Cell.value.setter  # type: ignore[misc,attr-defined]
     def value(self, value: int) -> None:
         """
         Iteratively updates the compute cells that depend on this input cell.
@@ -74,7 +74,7 @@ class InputCell(Cell):
         """
         self._value = value
 
-        distance: dict[int, (int, Cell)] = {id(self): (0, self)}
+        distance: dict[int, tuple[int, Cell]] = {id(self): (0, self)}
         q: deque[Cell] = deque([self])
         while q:
             cell = q.popleft()
@@ -89,19 +89,20 @@ class InputCell(Cell):
         for dist, group in itertools.groupby(sorted(distance.values(), key=lambda x: x[0]), key=lambda x: x[0]):
             if dist == 0:  # Input cell
                 continue
-            for _, child in group:
-                child.compute_value()
+            for _, c in group:
+                assert isinstance(c, ComputeCell)
+                c.compute_value()
 
 
 class ComputeCell(Cell):
     def __init__(
         self,
         dependencies: list[InputCell | ComputeCell],
-        compute: Callable[[[int]], int],
+        compute: Callable[[list[int]], int],
     ):
         super().__init__()
         self._compute = compute
-        self._callbacks = set()
+        self._callbacks: set[Callable[[int], None]] = set()
         self._dependencies = dependencies
         for cell in dependencies:
             # Create a bidirectional link.
@@ -116,7 +117,7 @@ class ComputeCell(Cell):
         self._callbacks.discard(callback)
 
     def compute_value(self) -> None:
-        new_value = self._compute([d.value for d in self._dependencies])
+        new_value = self._compute([typing.cast(int, d.value) for d in self._dependencies])
         if new_value != self._value:
             self._value = new_value
             for c in self._callbacks:

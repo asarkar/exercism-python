@@ -1,8 +1,6 @@
-from collections import namedtuple, deque
+from collections import deque
 from enum import Enum, auto
-
-BucketStats = namedtuple("BucketStats", ["num_moves", "goal_bucket", "other_bucket_capacity"])
-Move = namedtuple("Move", ["capacity1", "capacity2", "action"])
+from typing import NamedTuple
 
 
 class Action(Enum):
@@ -14,9 +12,21 @@ class Action(Enum):
     TXR_FROM_2_TO_1 = auto()
 
 
+class BucketStats(NamedTuple):
+    num_moves: int
+    goal_bucket: str
+    other_bucket_capacity: int
+
+
+class Move(NamedTuple):
+    capacity1: int
+    capacity2: int
+    action: Action
+
+
 def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> BucketStats:
     explored = set()
-    frontier = deque()
+    frontier: deque[list[Move]] = deque()
     if start_bucket == "one":
         initial_move = Move(capacity1, 0, Action.FILL_1)
         forbidden_move = (0, capacity2)
@@ -47,22 +57,22 @@ def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> Buc
 
 
 def __next_moves(capacity1: int, capacity2: int, max_capacity1: int, max_capacity2: int) -> list[Move]:
-    states = []
+    states: list[Move] = []
 
     if capacity1 > 0:
-        states.append((0, capacity2, Action.EMPTY_1))
+        states.append(Move(0, capacity2, Action.EMPTY_1))
     if capacity1 < max_capacity1:
-        states.append((max_capacity1, capacity2, Action.FILL_1))
+        states.append(Move(max_capacity1, capacity2, Action.FILL_1))
         if capacity2 > 0:
             vol = min(max_capacity1 - capacity1, capacity2)
-            states.append((capacity1 + vol, capacity2 - vol, Action.TXR_FROM_2_TO_1))
+            states.append(Move(capacity1 + vol, capacity2 - vol, Action.TXR_FROM_2_TO_1))
 
     if capacity2 > 0:
-        states.append((capacity1, 0, Action.EMPTY_2))
+        states.append(Move(capacity1, 0, Action.EMPTY_2))
     if capacity2 < max_capacity2:
-        states.append((capacity1, max_capacity2, Action.FILL_2))
+        states.append(Move(capacity1, max_capacity2, Action.FILL_2))
         if capacity1 > 0:
             vol = min(max_capacity2 - capacity2, capacity1)
-            states.append((capacity1 - vol, capacity2 + vol, Action.TXR_FROM_1_TO_2))
+            states.append(Move(capacity1 - vol, capacity2 + vol, Action.TXR_FROM_1_TO_2))
 
     return states

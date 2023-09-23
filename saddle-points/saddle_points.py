@@ -1,7 +1,7 @@
 import itertools
 
 
-def saddle_points(matrix: list[list[int]]) -> [dict[str, int]]:
+def saddle_points(matrix: list[list[int]]) -> list[dict[str, int]]:
     if not matrix:
         return []
     m = len(matrix)

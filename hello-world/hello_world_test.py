@@ -11,7 +11,6 @@ except ImportError as import_fail:
 
     item_name = item_name[:-1] + "()'"
 
-    # pylint: disable=raise-missing-from
     raise ImportError(
         "\n\nMISSING FUNCTION --> In your 'hello_world.py' file, we can not find or import the"
         f" function named {item_name}. \nThe tests for this first exercise expect a function that"

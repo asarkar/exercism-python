@@ -1,7 +1,6 @@
 from collections import deque
 
 
-# pylint: disable=R0903
 class ConnectGame:
     def __init__(self, board: str):
         self.field = [r.split() for r in board.splitlines()]

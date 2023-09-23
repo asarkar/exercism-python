@@ -1,22 +1,19 @@
 [tool.pytest.ini_options]
+markers = [
+    "task"
+]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["**/test_*.py", "**/*_test.py"]
 
 [tool.mypy]
+# https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-exclude
 exclude = [
-    '^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$',
-    '.git',
-    '.github',
-    '.mypy_cache',
-    '__pycache__',
-    '.pytest_cache',
-    'venv'
+    'venv',
+    '^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$'
 ]
 ignore_errors = 'False'
 
 [tool.black]
 line-length = 120
-extend-exclude = """
-/
-^(?:(?:[^/]+/)+(?:test_.*\\.py|.*_test\\.py))$
-| .github
-/
-"""

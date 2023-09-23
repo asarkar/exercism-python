@@ -1,7 +1,7 @@
 import unittest
 import pytest
 
-# pylint: disable=deprecated-module
+
 from sets import (
     clean_ingredients,
     check_drinks,
@@ -19,13 +19,6 @@ from sets_categories_data import (
     KETO,
     PALEO,
     OMNIVORE,
-    ALCOHOLS,
-    SPECIAL_INGREDIENTS,
-    VEGAN_INTERSECTIONS,
-    VEGETARIAN_INTERSECTIONS,
-    PALEO_INTERSECTIONS,
-    KETO_INTERSECTIONS,
-    OMNIVORE_INTERSECTIONS,
 )
 
 from sets_test_data import (

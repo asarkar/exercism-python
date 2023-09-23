@@ -1,4 +1,3 @@
-# pylint: disable-all
 # flake8: noqa,
 from sets_categories_data import (
     VEGAN_INTERSECTIONS,
@@ -3323,7 +3322,7 @@ nondupes = [
 ]
 
 group_1 = [item for item in recipes_with_duplicates if item[0] in dupes]
-group_2 = [(item[1], item[2]) for item in recipes_without_duplicates if item[1] in nondupes]
+group_2 = [(item[1], list(item[2])) for item in recipes_without_duplicates if item[1] in nondupes]
 
 dishes_to_special_label = sorted(group_1 + group_2)
 

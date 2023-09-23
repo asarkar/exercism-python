@@ -4,14 +4,13 @@ def __parse(puzzle: str) -> tuple[list[str], str]:
     return equation, result[::-1]
 
 
-def solve(puzzle: str) -> dict[str, int]:  # noqa: C901
+def solve(puzzle: str) -> dict[str, int] | None:  # noqa: C901
     equation, result = __parse(puzzle)
     if any(len(line) > len(result) for line in puzzle):
         raise ValueError("invalid equation")
     non_zero_letters = {line[-1] for line in equation}
     non_zero_letters.add(result[-1])
 
-    # pylint: disable=R0911
     def can_solve(row: int, col: int, carry: int, solution: dict[str, int]) -> bool:
         addend = row < len(equation)
         word = equation[row] if addend else result
@@ -45,8 +44,8 @@ def solve(puzzle: str) -> dict[str, int]:  # noqa: C901
         if assigned:
             return (solution[letter] == sum_digit) and can_solve(0, col + 1, carry // 10, solution)
 
-        used = sum_digit in solution.values()
-        if used or (sum_digit == 0 and letter in non_zero_letters):
+        is_used = sum_digit in solution.values()
+        if is_used or (sum_digit == 0 and letter in non_zero_letters):
             return False
         solution[letter] = sum_digit
         if can_solve(0, col + 1, carry // 10, solution):
@@ -54,5 +53,5 @@ def solve(puzzle: str) -> dict[str, int]:  # noqa: C901
         solution.pop(letter)
         return False
 
-    xs = {}
+    xs: dict[str, int] = {}
     return xs if can_solve(0, 0, 0, xs) else None

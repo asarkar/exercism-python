@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import Any
 
 NODE, EDGE, ATTR = range(3)
 
@@ -18,14 +19,13 @@ class Edge:
     attrs: dict[str, str]
 
 
-# pylint: disable=R0903
 class Graph:
-    def __init__(self, data=None):
+    def __init__(self, data: Any = None) -> None:
         if data is not None and not isinstance(data, list):
             raise TypeError("Graph data malformed")
-        self.attrs = {}
-        self.nodes = []
-        self.edges = []
+        self.attrs: dict[str, str] = {}
+        self.nodes: list[Node] = []
+        self.edges: list[Edge] = []
         if not data:
             return
         for item in data:
@@ -41,19 +41,19 @@ class Graph:
                 raise ValueError("Unknown item")
 
     @staticmethod
-    def __parse_attr(item) -> dict[str, str]:
+    def __parse_attr(item: Any) -> dict[str, str]:
         if not isinstance(item[1], str) or not isinstance(item[2], str):
             raise ValueError("Attribute is malformed")
         return {item[1]: item[2]}
 
     @staticmethod
-    def __parse_node(item) -> Node:
+    def __parse_node(item: Any) -> Node:
         if not isinstance(item[1], str) or not isinstance(item[2], dict):
             raise ValueError("Node is malformed")
         return Node(*item[1:])
 
     @staticmethod
-    def __parse_edge(item) -> Edge:
+    def __parse_edge(item: Any) -> Edge:
         if len(item) != 4 or any(not isinstance(x, str) for x in item[1:3]) or not isinstance(item[3], dict):
             raise ValueError("Edge is malformed")
         return Edge(*item[1:])

@@ -1,4 +1,5 @@
 """Solution to Ellen's Alien Game exercise."""
+from typing import Any
 
 
 class Alien:
@@ -38,9 +39,9 @@ class Alien:
         self.x_coordinate = x
         self.y_coordinate = y
 
-    def collision_detection(self, other_object):
+    def collision_detection(self, other_object: Any) -> None:
         pass
 
 
-def new_aliens_collection(alien_start_positions: list[tuple[int]]) -> list[Alien]:
+def new_aliens_collection(alien_start_positions: list[tuple[int, int]]) -> list[Alien]:
     return [Alien(*x) for x in alien_start_positions]

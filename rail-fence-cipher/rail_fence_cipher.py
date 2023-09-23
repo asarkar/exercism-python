@@ -3,7 +3,7 @@ from typing import Callable, Any
 
 
 def encode(message: str, num_rails: int) -> str:
-    rails = [[] for _ in range(num_rails)]
+    rails: list[list[str]] = [[] for _ in range(num_rails)]
     # Populate the rails.
     __zigzag(message, num_rails, lambda i, ch: rails[i].append(ch))
     return "".join("".join(r) for r in rails)
@@ -17,7 +17,6 @@ def decode(encoded_message: str, num_rails: int) -> str:
     __zigzag(
         encoded_message,
         num_rails,
-        # pylint: disable=C2801
         lambda i, _: rail_lengths.__setitem__(i, rail_lengths[i] + 1),
     )
 

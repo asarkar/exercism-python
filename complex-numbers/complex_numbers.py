@@ -4,43 +4,45 @@ import math
 
 
 class ComplexNumber:
-    def __init__(self, real, imaginary: float = 0.0):
+    def __init__(self, real: float, imaginary: float = 0.0) -> None:
         self.real = real
         self.imaginary = imaginary
 
-    def __eq__(self, other: ComplexNumber) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ComplexNumber):
+            return False
         return self.real == other.real and self.imaginary == other.imaginary
 
     def __repr__(self) -> str:
         return f"ComplexNumber({self.real}, {self.imaginary})"
 
-    def __add__(self, other) -> ComplexNumber:
+    def __add__(self, other: ComplexNumber | float) -> ComplexNumber:
         if isinstance(other, ComplexNumber):
             return ComplexNumber(self.real + other.real, self.imaginary + other.imaginary)
         return self + ComplexNumber(other)
 
-    def __radd__(self, other) -> ComplexNumber:
+    def __radd__(self, other: float) -> ComplexNumber:
         return self + ComplexNumber(other)
 
-    def __mul__(self, other) -> ComplexNumber:
+    def __mul__(self, other: ComplexNumber | float) -> ComplexNumber:
         if isinstance(other, ComplexNumber):
             r = self.real * other.real - self.imaginary * other.imaginary
             i = self.imaginary * other.real + self.real * other.imaginary
             return ComplexNumber(r, i)
         return self * ComplexNumber(other)
 
-    def __rmul__(self, other) -> ComplexNumber:
+    def __rmul__(self, other: float) -> ComplexNumber:
         return self * ComplexNumber(other)
 
-    def __sub__(self, other) -> ComplexNumber:
+    def __sub__(self, other: ComplexNumber | float) -> ComplexNumber:
         if isinstance(other, ComplexNumber):
             return ComplexNumber(self.real - other.real, self.imaginary - other.imaginary)
         return self - ComplexNumber(other)
 
-    def __rsub__(self, other) -> ComplexNumber:
+    def __rsub__(self, other: float) -> ComplexNumber:
         return ComplexNumber(other) - self
 
-    def __truediv__(self, other) -> ComplexNumber:
+    def __truediv__(self, other: ComplexNumber | float) -> ComplexNumber:
         if isinstance(other, ComplexNumber):
             x = other.real * other.real + other.imaginary * other.imaginary
             r = (self.real * other.real + self.imaginary * other.imaginary) / x
@@ -48,7 +50,7 @@ class ComplexNumber:
             return ComplexNumber(r, i)
         return self / ComplexNumber(other)
 
-    def __rtruediv__(self, other) -> ComplexNumber:
+    def __rtruediv__(self, other: float) -> ComplexNumber:
         return ComplexNumber(other) / self
 
     def __abs__(self) -> float:

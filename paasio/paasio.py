@@ -1,13 +1,14 @@
 import io
 from types import TracebackType
-from typing import Iterator, Type, Self
+from typing import Type, Self, Any
 from socket import socket
+from collections.abc import Iterator
 
 
 class MeteredFile(io.BufferedRandom):
     """Implement using a subclassing model."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:  # type: ignore[no-untyped-def]
         super().__init__(*args, **kwargs)
         self._read_bytes = self._write_bytes = self._read_ops = self._write_ops = 0
 
@@ -19,7 +20,7 @@ class MeteredFile(io.BufferedRandom):
         exc_type: Type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
-    ) -> bool | None:
+    ) -> None:
         """
         Exit the runtime context and return a Boolean flag indicating
         if any exception that occurred should be suppressed.
@@ -43,7 +44,7 @@ class MeteredFile(io.BufferedRandom):
         self._read_ops += 1
         return b
 
-    def read(self, size=-1) -> bytes:
+    def read(self, size: int | None = -1) -> bytes:
         """
         Read and return one line from the stream.
         """
@@ -61,7 +62,7 @@ class MeteredFile(io.BufferedRandom):
         return self._read_ops
 
     # Starting with Python 3.12, b: collections.abc.Buffer.
-    def write(self, b):
+    def write(self, b):  # type: ignore[no-untyped-def]
         i = super().write(b)
         self._write_bytes += i
         self._write_ops += 1
@@ -91,7 +92,7 @@ class MeteredSocket:
         exc_type: Type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
-    ) -> bool | None:
+    ) -> None:
         """
         Exit the runtime context and return a Boolean flag indicating
         if any exception that occurred should be suppressed.
@@ -115,7 +116,7 @@ class MeteredSocket:
     def recv_ops(self) -> int:
         return self._recv_ops
 
-    def send(self, data, flags: int = 0) -> int:
+    def send(self, data: Any, flags: int = 0) -> int:
         i = self._socket.send(data, flags)
         self._send_bytes += i
         self._send_ops += 1

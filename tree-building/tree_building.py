@@ -1,4 +1,3 @@
-# pylint: disable=R0903
 class Record:
     def __init__(self, record_id: int, parent_id: int) -> None:
         self.record_id = record_id
@@ -8,7 +7,7 @@ class Record:
 class Node:
     def __init__(self, node_id: int) -> None:
         self.node_id = node_id
-        self.children = []
+        self.children: list[Node] = []
 
 
 def BuildTree(records: list[Record]) -> Node | None:

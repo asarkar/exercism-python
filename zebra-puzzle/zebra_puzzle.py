@@ -14,7 +14,7 @@ def owns_zebra() -> str:
 
 
 # https://www.youtube.com/watch?v=Qd84SEf6GbM&list=PLAwxTw4SYaPnJVtPvZZ5zXj_wRBjH0FxX&index=77
-def __zebra_puzzle() -> (int, int):
+def __zebra_puzzle() -> tuple[int, int]:
     orderings = list(itertools.permutations(range(1, 6)))  # 120 permutations
     first, middle = 1, 3
     # For ints, == and 'is' are the same.

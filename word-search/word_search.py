@@ -16,7 +16,6 @@ class Direction(Enum):
     SW = auto()
 
 
-# pylint: disable=R0903
 class WordSearch:
     def __init__(self, puzzle: list[str]):
         self.puzzle = puzzle
@@ -34,9 +33,8 @@ class WordSearch:
                 return Point(col, row), p
         return None
 
-    # pylint: disable=R0913
     def __search_end(
-        self, word: str, i: int, coord: Point, visited: set[Point], direction: Direction
+        self, word: str, i: int, coord: Point, visited: set[Point], direction: Optional[Direction]
     ) -> Optional[Point]:
         if i >= len(word) or coord in visited:
             return None

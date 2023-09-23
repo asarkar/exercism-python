@@ -1,4 +1,4 @@
-class Frame(list):
+class Frame(list[int]):
     def score(self) -> int:
         return sum(self)
 
@@ -7,7 +7,7 @@ class Frame(list):
 
 
 class BowlingGame:
-    def __init__(self):
+    def __init__(self) -> None:
         self.frames: list[Frame] = []
 
     def roll(self, pins: int) -> None:

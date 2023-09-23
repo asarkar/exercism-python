@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import dataclasses
 import functools
+import typing
+from typing import Generator, Any
 
-from parsy import regex, seq, string, generate, any_char, test_char, ParseError  # type: ignore
+from parsy import regex, seq, string, generate, any_char, test_char, ParseError, Parser  # type: ignore
 
 
 @dataclasses.dataclass
@@ -54,8 +56,8 @@ def parse(input_string: str) -> SgfTree:
 
     prop = seq(prop_id, prop_val.at_least(1)).combine(lambda x, y: {x: y})
 
-    @generate
-    def node():
+    @generate  # type: ignore[misc]
+    def node() -> Generator[Parser, Any, SgfTree]:
         yield string(";")
         props = yield prop.many()
         return SgfTree(functools.reduce(lambda acc, p: acc | p, props, {}))
@@ -67,8 +69,8 @@ def parse(input_string: str) -> SgfTree:
     # tree.become(string('(') >> seq(nodes=node.at_least(1), forest=tree.many()) << string(')'))
 
     # https://www.hexwiki.net/index.php/Smart_Game_Format#Tree_structure
-    @generate
-    def tree():
+    @generate  # type: ignore[misc]
+    def tree() -> Generator[Parser, Any, SgfTree]:
         yield string("(")
         nodes = yield node.at_least(1)
         forest = yield tree.many()
@@ -78,9 +80,9 @@ def parse(input_string: str) -> SgfTree:
         nodes[-1].children = forest
         for i in range(len(nodes) - 1):
             nodes[i].children = [nodes[i + 1]]
-        return nodes[0]
+        return typing.cast(SgfTree, nodes[0])
 
     try:
-        return tree.parse(input_string)
+        return typing.cast(SgfTree, tree.parse(input_string))
     except ParseError as pe:
         raise ValueError(error_msg(pe)) from pe

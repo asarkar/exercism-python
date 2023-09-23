@@ -6,7 +6,7 @@ import re
 # A cool community solution: https://exercism.org/tracks/python/exercises/rectangles/solutions/pnowosie
 def rectangles(strings: list[str]) -> int:
     # The argument to defaultdict needs to be a callable. A lambda is a callable.
-    corners = defaultdict(lambda: defaultdict(list))
+    corners: dict[int, dict[int, list[int]]] = defaultdict(lambda: defaultdict(list))
 
     # We create a mapping of column: (length, row) for every connected
     # horizontal side of the rectangle.

@@ -41,7 +41,6 @@ class MeltdownMitigationTest(unittest.TestCase):
                 neutrons_emitted=neutrons_emitted,
                 expected=expected,
             ):
-                # pylint: disable=assignment-from-no-return
                 actual_result = is_criticality_balanced(temp, neutrons_emitted)
                 failure_message = (
                     f"Expected {expected} but returned {actual_result} "
@@ -80,7 +79,6 @@ class MeltdownMitigationTest(unittest.TestCase):
                 theoretical_max_power=theoretical_max_power,
                 expected=expected,
             ):
-                # pylint: disable=assignment-from-no-return
                 actual_result = reactor_efficiency(voltage, current, theoretical_max_power)
                 failure_message = (
                     f"Expected {expected} but returned {actual_result} "
@@ -115,7 +113,6 @@ class MeltdownMitigationTest(unittest.TestCase):
                 threshold=threshold,
                 expected=expected,
             ):
-                # pylint: disable=assignment-from-no-return
                 actual_result = fail_safe(temp, neutrons_per_second, threshold)
                 failure_message = (
                     f"Expected {expected} but returned {actual_result} with T={temp}, "

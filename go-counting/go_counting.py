@@ -1,4 +1,5 @@
 from collections import deque, defaultdict
+from typing import Optional
 
 WHITE = "W"
 BLACK = "B"
@@ -74,7 +75,7 @@ class Board:
 
     def __bfs(self, start: tuple[int, int]) -> tuple[str, set[tuple[int, int]]]:
         q = deque([start])
-        color = None
+        color: Optional[str] = None
         visited = set()
 
         while q:
@@ -98,4 +99,5 @@ class Board:
             empties = [x for x in neighbors if self.field[x[0]][x[1]] == BLANK]
             q.extend(empties)
 
+        assert color is not None
         return color, visited

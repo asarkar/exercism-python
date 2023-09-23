@@ -18,14 +18,13 @@ except ImportError as import_fail:
     item_name = import_fail.args[0].split()[3]
 
     if "EXPECTED_BAKE_TIME" in item_name:
-        # pylint: disable=raise-missing-from
         raise ImportError(
             f"\n\nMISSING CONSTANT --> \nWe can not find or import the constant {item_name} in your"
             " 'lasagna.py' file.\nDid you misname or forget to define it?"
         ) from None
     else:
         item_name = item_name[:-1] + "()'"
-        # pylint: disable=raise-missing-from
+
         raise ImportError(
             "\n\nMISSING FUNCTION --> In your 'lasagna.py' file, we can not find or import the"
             f" function named {item_name}. \nDid you misname or forget to define it?"

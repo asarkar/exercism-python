@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class Clock:
     def __init__(self, hour: int, minute: int) -> None:
         hr = hour % 24
@@ -18,11 +21,11 @@ class Clock:
     def __str__(self) -> str:
         return f"{self.hour:02}:{self.minutes:02}"
 
-    def __eq__(self, other) -> bool:
-        return str(self) == str(other)
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Clock) and str(self) == str(other)
 
-    def __add__(self, minutes):
+    def __add__(self, minutes: int) -> Clock:
         return Clock(self.hour, self.minutes + minutes)
 
-    def __sub__(self, minutes):
+    def __sub__(self, minutes: int) -> Clock:
         return self.__add__(-minutes)

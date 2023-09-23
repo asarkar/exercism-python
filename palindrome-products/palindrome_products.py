@@ -2,7 +2,7 @@ import operator
 from typing import Callable
 
 
-def largest(min_factor: int, max_factor: int) -> tuple[int, list[list[int, int]]]:
+def largest(min_factor: int, max_factor: int) -> tuple[int | None, list[list[int]]]:
     """Given a range of numbers, find the largest palindromes which
        are products of two numbers within that range.
 
@@ -14,7 +14,7 @@ def largest(min_factor: int, max_factor: int) -> tuple[int, list[list[int, int]]
     return __palindrome(range(max_factor, min_factor - 1, -1), operator.ge)
 
 
-def smallest(min_factor: int, max_factor: int) -> tuple[int, list[list[int, int]]]:
+def smallest(min_factor: int, max_factor: int) -> tuple[int | None, list[list[int]]]:
     """Given a range of numbers, find the smallest palindromes which
     are products of two numbers within that range.
 
@@ -26,7 +26,7 @@ def smallest(min_factor: int, max_factor: int) -> tuple[int, list[list[int, int]
     return __palindrome(range(min_factor, max_factor + 1), operator.le)
 
 
-def __palindrome(r: range, op: Callable[[int, int], bool]) -> tuple[int, list[list[int, int]]]:
+def __palindrome(r: range, op: Callable[[int, int], bool]) -> tuple[int | None, list[list[int]]]:
     """
     Searches for a palindrome with factors in the given range. Whether the palindrome is the
     maximum or minimum depends on the given operator.
@@ -37,8 +37,8 @@ def __palindrome(r: range, op: Callable[[int, int], bool]) -> tuple[int, list[li
     """
     if len(r) == 0:
         raise ValueError("min must be <= max")
-    palindrome = None
-    factors = []
+    palindrome: int | None = None
+    factors: list[list[int]] = []
     for left in r:
         # This variable determines whether the last iterations of the inner loop
         # produced a product that satisfied the given condition when compared with

@@ -6,7 +6,7 @@ from collections import defaultdict, deque
 
 
 class StackUnderflowError(Exception):
-    def __init__(self, message):
+    def __init__(self, message: str) -> None:
         self.message = message
 
 
@@ -54,7 +54,7 @@ class Forth:
             word = m.group(1)
             p = re.compile(cls.DEFN)
             defn = []
-            while m := p.search(txt, m.end()):
+            while m is not None and (m := p.search(txt, m.end())):
                 defn.append(m.group(1))
             return word, defn
 
@@ -104,7 +104,7 @@ class Forth:
         if w not in self.defn:
             return deque([w])
         j, definitions = next(d for k in itertools.count(-1, -1) if (d := self.defn[w][k])[0] < i)
-        result = deque()
+        result: deque[str] = deque()
         for k in range(-1, -len(definitions) - 1, -1):
             commands = self.resolve_defn(j, definitions[k])
             # deque.extendleft() reverses the argument,

@@ -1,3 +1,4 @@
+import typing
 from typing import Callable
 
 M = 26
@@ -21,11 +22,11 @@ def encode(plain_text: str, a: int, b: int) -> str:
 
 def decode(ciphered_text: str, a: int, b: int) -> str:
     m = __mmi(a, M)
-    if not m:
+    if m is None:
         raise ValueError("a and m must be coprime.")
     result = []
     for ch in ciphered_text:
-        if c := __xcode(ch, lambda x: ((x - b) * m) % M):
+        if c := __xcode(ch, lambda x: ((x - b) * typing.cast(int, m)) % M):
             result.append(c)
 
     return "".join(result)

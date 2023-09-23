@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class BufferFullException(BufferError):
     """Exception raised when CircularBuffer is full.
 
@@ -35,7 +38,7 @@ class BufferEmptyException(BufferError):
 
 class CircularBuffer:
     def __init__(self, capacity: int) -> None:
-        self.data = [None] * capacity
+        self.data: list[Optional[str]] = [None] * capacity
         self.write_idx = self.read_idx = self.size = 0
         self.capacity = capacity
 
@@ -43,6 +46,7 @@ class CircularBuffer:
         if self.__is_empty():
             raise BufferEmptyException("Circular buffer is empty")
         element = self.data[self.read_idx]
+        assert element is not None
         self.read_idx = (self.read_idx + 1) % self.capacity
         self.size -= 1
         return element
@@ -62,7 +66,7 @@ class CircularBuffer:
         else:
             self.write(element)
 
-    def clear(self):
+    def clear(self) -> None:
         self.data = [None] * self.capacity
         self.write_idx = self.read_idx = self.size = 0
 

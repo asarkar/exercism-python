@@ -27,20 +27,20 @@ class PhoneNumber:
         return "-".join([f"({self.area_code})", self.exchange_code, self.line_number])
 
     @staticmethod
-    def parse(num: str, name: str = None) -> str | tuple[str, str, str]:
+    def parse(num: str, name: str = "") -> list[str]:
         n = len(num)
         if n == 10:
             area_code = num[:3]
             exchange_code = num[3:6]
-            return (
-                PhoneNumber.parse(area_code, "area"),
-                PhoneNumber.parse(exchange_code, "exchange"),
+            return [
+                PhoneNumber.parse(area_code, "area")[0],
+                PhoneNumber.parse(exchange_code, "exchange")[0],
                 num[6:],
-            )
+            ]
         if n == 3:
             if num[0] == "0":
                 raise ValueError(f"{name} code cannot start with zero")
             if num[0] == "1":
                 raise ValueError(f"{name} code cannot start with one")
-            return num
-        return None
+            return [num]
+        raise ValueError("failed to parse")

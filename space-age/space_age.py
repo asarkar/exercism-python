@@ -4,28 +4,28 @@ class SpaceAge:
     def __init__(self, seconds: float) -> None:
         self.sec = seconds
 
-    def on_earth(self):
+    def on_earth(self) -> float:
         return self.__age(1.0)
 
-    def on_mercury(self):
+    def on_mercury(self) -> float:
         return self.__age(0.2408467)
 
-    def on_venus(self):
+    def on_venus(self) -> float:
         return self.__age(0.61519726)
 
-    def on_mars(self):
+    def on_mars(self) -> float:
         return self.__age(1.8808158)
 
-    def on_jupiter(self):
+    def on_jupiter(self) -> float:
         return self.__age(11.862615)
 
-    def on_saturn(self):
+    def on_saturn(self) -> float:
         return self.__age(29.447498)
 
-    def on_uranus(self):
+    def on_uranus(self) -> float:
         return self.__age(84.016846)
 
-    def on_neptune(self):
+    def on_neptune(self) -> float:
         return self.__age(164.79132)
 
     def __age(self, orbital_period: float) -> float:

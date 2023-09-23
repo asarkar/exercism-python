@@ -2,7 +2,7 @@ import re
 
 
 def answer(question: str) -> int:
-    result = None
+    result = -1
     i = 0
     for m in re.finditer(r"([^0-9\-]+)(-?\d+)", question):
         if len(m.groups()) != 2:
@@ -32,8 +32,7 @@ def answer(question: str) -> int:
     if i != len(question) - 1:
         w = question[i:-1].strip()
         terms = r"What\sis|plus|minus|multiplied\sby|divided\sby"
-        m = re.match(rf"^(?:{terms}\s*)+$", w)
-        if m:
+        if re.match(rf"^(?:{terms}\s*)+$", w) is not None:
             raise ValueError("syntax error")
 
         raise ValueError("unknown operation")

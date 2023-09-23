@@ -1,7 +1,6 @@
 import functools
 from typing import TypeVar, Callable
 
-# pylint: disable=W0622
 
 U = TypeVar("U")
 T = TypeVar("T")
@@ -31,7 +30,7 @@ def foldl(function: Callable[[U, T], U], list: list[T], initial: U) -> U:
     return functools.reduce(function, list, initial)
 
 
-def foldr(function: Callable[[T, U], U], list: list[T], initial: U) -> U:
+def foldr(function: Callable[[U, T], U], list: list[T], initial: U) -> U:
     return foldl(function, reverse(list), initial)
 
 

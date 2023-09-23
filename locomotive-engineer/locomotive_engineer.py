@@ -1,7 +1,7 @@
 """Functions which helps the locomotive engineer to keep track of the train."""
 
 
-def get_list_of_wagons(*wagon_ids) -> list[int]:
+def get_list_of_wagons(*wagon_ids: int) -> list[int]:
     """Return a list of wagons.
 
     :param: wagon_ids - arbitrary number of wagons.
@@ -21,7 +21,7 @@ def fix_list_of_wagons(each_wagons_id: list[int], missing_wagons: list[int]) -> 
     return [locomotive_id, *missing_wagons, *rest, x, y]
 
 
-def add_missing_stops(route: dict[str, str | list[str]], **stops) -> dict[str, str | list[str]]:
+def add_missing_stops(route: dict[str, str | list[str]], **stops: str) -> dict[str, str | list[str]]:
     """Add missing stops to route dict.
 
     :param route: dict - the dict of routing information.

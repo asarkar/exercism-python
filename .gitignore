@@ -6,12 +6,16 @@
 # PyCharm
 .idea
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
 # Python
 *.pyc
 __pycache__
+venv
 
 # Pytest
 .pytest_cache
+
+# Mypy
+.mypy_cache
+
+# ruff
+.ruff_cache

@@ -2,8 +2,8 @@ import functools
 from collections import deque
 
 
-def encode(numbers: [int]) -> [int]:
-    def go(acc: [int], i: int) -> [int]:
+def encode(numbers: list[int]) -> list[int]:
+    def go(acc: list[int], i: int) -> list[int]:
         acc.extend(__encode(i))
         return acc
 
@@ -22,7 +22,7 @@ def encode(numbers: [int]) -> [int]:
 #    By definition, the very last byte of a variable-length integer will
 #    have 0 as its MSb.
 def __encode(num: int) -> deque[int]:
-    result = deque()
+    result: deque[int] = deque()
     fst = True
     if num == 0:
         result.append(0)
@@ -45,12 +45,12 @@ def __encode(num: int) -> deque[int]:
     return result
 
 
-def decode(bytes_):
+def decode(bytes_: list[int]) -> list[int]:
     if bytes_ and not __is_last_byte(bytes_[-1]):
         raise ValueError("incomplete sequence")
 
     # Result is a list as there can be more sequences
-    result = []
+    result: list[int] = []
     # Initial decoded number for sequence
     num = 0
     # The following loop explained:

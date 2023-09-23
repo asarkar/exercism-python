@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
+import typing
 
 from lark import Lark, Transformer, Token, UnexpectedCharacters, UnexpectedToken
 
@@ -47,7 +48,7 @@ def parse(input_string: str) -> SgfTree:
         raise ValueError("unexpected") from ut
 
 
-class SgfTransformer(Transformer):
+class SgfTransformer(Transformer[Token, list[SgfTree]]):
     Properties = dict[str, list[str]]
 
     @staticmethod
@@ -61,7 +62,7 @@ class SgfTransformer(Transformer):
         :return: string with some characters possibly replaced
         """
         escaped = False
-        txt = []
+        txt: list[str] = []
         for c in s[1:-1]:
             if escaped:
                 _ = txt.pop()
@@ -92,10 +93,11 @@ class SgfTransformer(Transformer):
         # by this function.
         # # https://www.hexwiki.net/index.php/Smart_Game_Format#Tree_structure
         for i in range(len(nodes) - 1):
+            node = typing.cast(SgfTree, nodes[i])
             if isinstance(nodes[i + 1], SgfTree):
-                nodes[i].children.append(nodes[i + 1])
+                node.children.append(typing.cast(SgfTree, nodes[i + 1]))
             else:
-                nodes[i].children.extend([child[0] for child in nodes[i + 1 :]])
+                node.children.extend([child[0] for child in typing.cast(list[list[SgfTree]], nodes[i + 1 :])])
                 break
 
-        return nodes[:1]
+        return typing.cast(list[SgfTree], nodes[:1])

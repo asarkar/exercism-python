@@ -1,4 +1,10 @@
-def tree_from_traversals(preorder: list[str], inorder: list[str]):
+from typing import TypeAlias
+
+Node: TypeAlias = dict[str, "NodeVal"]
+NodeVal: TypeAlias = str | Node
+
+
+def tree_from_traversals(preorder: list[str], inorder: list[str]) -> Node:
     pre = set(preorder)
     inorder_map = {x: i for i, x in enumerate(inorder)}
     if len(pre) != len(preorder) or len(inorder_map) != len(inorder):
@@ -10,7 +16,7 @@ def tree_from_traversals(preorder: list[str], inorder: list[str]):
     return __build(preorder, inorder_map, 0, 0, len(inorder) - 1)[0]
 
 
-def __build(preorder: list[str], inorder_map: dict[str, int], i: int, lo: int, hi: int):
+def __build(preorder: list[str], inorder_map: dict[str, int], i: int, lo: int, hi: int) -> tuple[Node, int]:
     """
     Builds a node.
 
@@ -28,7 +34,7 @@ def __build(preorder: list[str], inorder_map: dict[str, int], i: int, lo: int, h
         return {}, -1
 
     val = preorder[i]
-    node = {"v": val, "l": {}, "r": {}}
+    node: Node = {"v": val, "l": {}, "r": {}}
     if lo == hi:
         return node, i + 1
 

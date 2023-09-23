@@ -11,8 +11,9 @@ class Node:
 
 
 class LinkedList:
-    def __init__(self):
-        self.head = self.tail = None
+    def __init__(self) -> None:
+        self.head: Optional[Node] = None
+        self.tail: Optional[Node] = None
         self.size = 0
 
     def push(self, val: int) -> None:
@@ -40,6 +41,7 @@ class LinkedList:
         if self.is_empty():
             raise IndexError("List is empty")
         self.size -= 1
+        assert self.tail is not None
         prev = self.tail.prev
         node = self.tail
         node.prev = None
@@ -59,6 +61,7 @@ class LinkedList:
         if self.is_empty():
             raise IndexError("List is empty")
         self.size -= 1
+        assert self.head is not None
         nxt = self.head.nxt
         node = self.head
         node.nxt = None

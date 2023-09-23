@@ -2,7 +2,7 @@ import heapq
 
 
 def sum_of_multiples(limit: int, multiples: list[int]) -> int:
-    q = []
+    q: list[tuple[int, int]] = []
     for i in multiples:
         if i > 0:
             heapq.heappush(q, (i, i))
