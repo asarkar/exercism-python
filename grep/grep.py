@@ -1,6 +1,6 @@
 import re
 
-import grep_test as gt  # type: ignore[import]
+import grep_test as gt  # type: ignore[import-not-found]
 
 
 def grep(pattern: str, flags: str, files: list[str]) -> str:

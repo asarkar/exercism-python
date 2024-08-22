@@ -1,6 +1,5 @@
 """Functions for compiling dishes and ingredients for a catering company."""
 
-
 from sets_categories_data import (
     VEGAN,
     VEGETARIAN,

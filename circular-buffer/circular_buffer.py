@@ -1,4 +1,4 @@
-from typing import Optional
+from collections import deque
 
 
 class BufferFullException(BufferError):
@@ -23,55 +23,32 @@ class BufferEmptyException(BufferError):
         self.message = message
 
 
-# We maintain a write and a read pointer into the buffer. Write
-# is done at the location of the write ptr, and read is done from
-# the location of the read ptr. The pointers are incremented after
-# corresponding read/write operations, modulo to the capacity.
-#
-# The exception to the above is when the buffer is full and an
-# overwrite is done, then we write at the location of the read
-# ptr.
-#
-# Basically, the read ptr points to the oldest element, and the
-# write ptr to the next free slot.
-
-
+# Just a queue, if full, overwrite removes the oldest element from the front.
 class CircularBuffer:
     def __init__(self, capacity: int) -> None:
-        self.data: list[Optional[str]] = [None] * capacity
-        self.write_idx = self.read_idx = self.size = 0
+        self.data: deque[str] = deque()
         self.capacity = capacity
 
     def read(self) -> str:
-        if self.__is_empty():
+        if self._is_empty():
             raise BufferEmptyException("Circular buffer is empty")
-        element = self.data[self.read_idx]
-        assert element is not None
-        self.read_idx = (self.read_idx + 1) % self.capacity
-        self.size -= 1
-        return element
+        return self.data.popleft()
 
-    def write(self, element: str) -> None:
-        if self.__is_full():
+    def write(self, elem: str) -> None:
+        if self._is_full():
             raise BufferFullException("Circular buffer is full")
+        self.data.append(elem)
 
-        self.data[self.write_idx] = element
-        self.write_idx = (self.write_idx + 1) % self.capacity
-        self.size += 1
-
-    def overwrite(self, element: str) -> None:
-        if self.__is_full():
-            self.data[self.read_idx] = element
-            self.read_idx = (self.read_idx + 1) % self.capacity
-        else:
-            self.write(element)
+    def overwrite(self, elem: str) -> None:
+        if self._is_full():
+            self.data.popleft()
+        self.data.append(elem)
 
     def clear(self) -> None:
-        self.data = [None] * self.capacity
-        self.write_idx = self.read_idx = self.size = 0
+        self.data.clear()
 
-    def __is_empty(self) -> bool:
-        return self.size == 0
+    def _is_empty(self) -> bool:
+        return not self.data
 
-    def __is_full(self) -> bool:
-        return self.size == self.capacity
+    def _is_full(self) -> bool:
+        return len(self.data) == self.capacity

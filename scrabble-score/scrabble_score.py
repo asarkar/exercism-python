@@ -2,6 +2,7 @@ def score(word: str) -> int:
     return sum(__score(ch.upper()) for ch in word)
 
 
+# c.f. https://exercism.org/tracks/python/exercises/scrabble-score/solutions/yawpitch
 def __score(letter: str) -> int:
     result = 0
     if letter in {"A", "E", "I", "O", "U", "L", "N", "R", "S", "T"}:

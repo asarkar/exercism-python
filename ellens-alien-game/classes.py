@@ -1,4 +1,5 @@
 """Solution to Ellen's Alien Game exercise."""
+
 from typing import Any
 
 
