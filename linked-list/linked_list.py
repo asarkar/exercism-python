@@ -6,8 +6,8 @@ import dataclasses
 @dataclasses.dataclass
 class Node:
     val: int
-    prev: Optional[Node] = None
-    nxt: Optional[Node] = None
+    prev: Optional[Node]
+    nxt: Optional[Node]
 
 
 class LinkedList:
@@ -16,6 +16,10 @@ class LinkedList:
         self.tail: Optional[Node] = None
         self.size = 0
 
+    def _singleton(self, val: int) -> None:
+        self.head = self.tail = Node(val, None, None)
+        self.size = 1
+
     def push(self, val: int) -> None:
         """
         Appends the given value at the end
@@ -23,14 +27,13 @@ class LinkedList:
         :param val: value to append
         :return: nothing
         """
-        node = Node(val)
-        self.size += 1
-        if not self.tail:
-            self.head = self.tail = node
-        else:
-            self.tail.nxt = node
-            node.prev = self.tail
-            self.tail = node
+        match self.tail:
+            case None:
+                self._singleton(val)
+            case x:
+                self.tail = Node(val, x, x.nxt)
+                x.nxt = self.tail
+                self.size += 1
 
     def pop(self) -> int:
         """
@@ -38,19 +41,18 @@ class LinkedList:
 
         :return: the element removed
         """
-        if self.is_empty():
-            raise IndexError("List is empty")
-        self.size -= 1
-        assert self.tail is not None
-        prev = self.tail.prev
-        node = self.tail
-        node.prev = None
-        if prev:
-            prev.nxt = None
-        else:
-            self.head = None
-        self.tail = prev
-        return node.val
+        match self.tail:
+            case None:
+                raise IndexError("List is empty")
+            case x:
+                self.tail = x.prev
+                if self.tail is not None:
+                    self.tail.nxt = None
+                else:
+                    self.head = None
+                self.size -= 1
+
+                return x.val
 
     def shift(self) -> int:
         """
@@ -58,19 +60,18 @@ class LinkedList:
 
         :return: the element removed
         """
-        if self.is_empty():
-            raise IndexError("List is empty")
-        self.size -= 1
-        assert self.head is not None
-        nxt = self.head.nxt
-        node = self.head
-        node.nxt = None
-        if nxt:
-            nxt.prev = None
-        else:
-            self.tail = None
-        self.head = nxt
-        return node.val
+        match self.head:
+            case None:
+                raise IndexError("List is empty")
+            case x:
+                self.head = x.nxt
+                if self.head is not None:
+                    self.head.prev = None
+                else:
+                    self.tail = None
+                self.size -= 1
+
+                return x.val
 
     def unshift(self, val: int) -> None:
         """
@@ -79,14 +80,13 @@ class LinkedList:
         :param val: value to prepend
         :return: nothing
         """
-        node = Node(val)
-        self.size += 1
-        if not self.head:
-            self.head = self.tail = node
-        else:
-            self.head.prev = node
-            node.nxt = self.head
-            self.head = node
+        match self.head:
+            case None:
+                self._singleton(val)
+            case x:
+                self.head = Node(val, x.prev, x)
+                x.prev = self.head
+                self.size += 1
 
     def delete(self, val: int) -> None:
         """
@@ -96,28 +96,24 @@ class LinkedList:
         :return: nothing
         """
         node = self.head
-        prev = None
-        while node and node.val != val:
-            prev = node
+        while node is not None and node.val != val:
             node = node.nxt
 
-        if not node:
+        if node is None:
             raise ValueError("Value not found")
 
-        if node is self.head:
-            self.shift()
-        elif node is self.tail:
-            self.pop()
-        else:
-            if prev:
-                prev.nxt = node.nxt
-            if node.nxt:
-                node.nxt.prev = prev
+        match node:
+            case self.head:
+                self.shift()
+            case self.tail:
+                self.pop()
+            case _:
+                if node.prev is not None:
+                    node.prev.nxt = node.nxt
+                if node.nxt is not None:
+                    node.nxt.prev = node.prev
 
-            self.size -= 1
-
-    def is_empty(self) -> bool:
-        return self.size == 0
+                self.size -= 1
 
     def __len__(self) -> int:
         return self.size
