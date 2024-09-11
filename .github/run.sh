@@ -42,11 +42,11 @@ fi
 
 if (( no_lint == 0 )); then
 	if [[ -z "${CI}" ]]; then
-	  "$bin_dir"black "$basedir"
-	  "$bin_dir"ruff check --fix "$basedir"
-	else
-		"$bin_dir"black --check "$basedir"
-		"$bin_dir"ruff check "$basedir"
-	fi
+    "$bin_dir"ruff check --fix "$basedir"
+    "$bin_dir"ruff format "$basedir"
+  else
+    "$bin_dir"ruff check "$basedir"
+    "$bin_dir"ruff format --check "$basedir"
+  fi
   "$bin_dir"mypy --explicit-package-bases "$basedir" --strict
 fi

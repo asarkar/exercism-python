@@ -1,6 +1,5 @@
 pytest
 ruff
 mypy
-black
 parsy
 lark
