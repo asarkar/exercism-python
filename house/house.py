@@ -15,9 +15,9 @@ PARAGRAPH = [
 
 
 # The pattern is that for a given line number n, it contains the last n lines
-# of the last paragraph. The first of these lines starts with "This is the",
+# of the paragraph. The first of these lines should start with "This is the",
 # so, we split the line around the word "the", and prepend "This is" to the
-# right.
+# segment to the right of "the".
 # We then concatenate the n lines using whitespace.
 def recite(start_verse: int, end_verse: int) -> list[str]:
     rhyme: list[str] = []
