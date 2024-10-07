@@ -45,7 +45,7 @@ def i_know(animal: Animal) -> list[str]:
 
 
 def hunt(predator: Animal, prey: Animal) -> list[str]:
-    return [f"She swallowed the {predator.name} " f"to catch the {prey.name}{prey.extra}."]
+    return [f"She swallowed the {predator.name} to catch the {prey.name}{prey.extra}."]
 
 
 def i_dont_know() -> list[str]:
