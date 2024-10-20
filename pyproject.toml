@@ -1,3 +1,6 @@
+[project]
+requires-python = ">= 3.12"
+
 [tool.pytest.ini_options]
 markers = [
     "task"
@@ -14,6 +17,3 @@ exclude = [
     '^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$'
 ]
 ignore_errors = 'False'
-
-[tool.black]
-line-length = 120
