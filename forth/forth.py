@@ -1,7 +1,7 @@
-import itertools
+import bisect
 import operator
 import re
-from typing import Optional
+from typing import Optional, Callable
 from collections import defaultdict, deque
 
 
@@ -33,7 +33,7 @@ class Forth:
         self.defn_id = 0
 
         for line in input_data:
-            if wd := Forth.parse_defn(line):
+            if (wd := Forth.parse_defn(line)) is not None:
                 self.create_defn(*wd)
             else:
                 for cmd in line.split():
@@ -50,12 +50,10 @@ class Forth:
     def parse_defn(cls, txt: str) -> Optional[tuple[str, list[str]]]:
         if txt[0] != ":":
             return None
-        if m := re.match(cls.WORD, txt, re.VERBOSE):
+        if (m := re.match(cls.WORD, txt, re.VERBOSE)) is not None:
             word = m.group(1)
             p = re.compile(cls.DEFN)
-            defn = []
-            while m is not None and (m := p.search(txt, m.end())):
-                defn.append(m.group(1))
+            defn = p.findall(txt, m.end())
             return word, defn
 
         raise ValueError("illegal operation")
@@ -103,13 +101,14 @@ class Forth:
         w = word.upper()
         if w not in self.defn:
             return deque([w])
-        j, definitions = next(d for k in itertools.count(-1, -1) if (d := self.defn[w][k])[0] < i)
+        j = bisect.bisect_left(self.defn[w], i, key=operator.itemgetter(0))
+        j, definitions = self.defn[w][j - 1]
         result: deque[str] = deque()
-        for k in range(-1, -len(definitions) - 1, -1):
+        for k in range(len(definitions) - 1, -1, -1):
             commands = self.resolve_defn(j, definitions[k])
             # deque.extendleft() reverses the argument,
             # so, do it manually.
-            for c in range(-1, -len(commands) - 1, -1):
+            for c in range(len(commands) - 1, -1, -1):
                 result.appendleft(commands[c])
         return result
 
@@ -122,16 +121,17 @@ class Forth:
             self.run_stack_op(cmd)
 
     def run_bin_op(self, cmd: str) -> None:
-        op = None
-        if cmd == "+":
-            op = operator.add
-        elif cmd == "-":
-            op = operator.sub
-        elif cmd == "*":
-            op = operator.mul
-        elif cmd == "/":
-            op = operator.floordiv
-        if op:
+        op: Optional[Callable[[int, int], int]] = None
+        match cmd:
+            case "+":
+                op = operator.add
+            case "-":
+                op = operator.sub
+            case "*":
+                op = operator.mul
+            case "/":
+                op = operator.floordiv
+        if op is not None:
             if len(self.stack) < 2:
                 raise StackUnderflowError("Insufficient number of items in stack")
             x = self.stack.popleft()
@@ -144,20 +144,21 @@ class Forth:
 
     def run_stack_op(self, cmd: str) -> None:
         try:
-            if cmd == "OVER":
-                x = self.stack.popleft()
-                y = self.stack[0]
-                self.stack.extendleft([x, y])
-            elif cmd == "SWAP":
-                x = self.stack.popleft()
-                y = self.stack.popleft()
-                self.stack.extendleft([x, y])
-            elif cmd == "DUP":
-                self.stack.appendleft(self.stack[0])
-            elif cmd == "DROP":
-                _ = self.stack.popleft()
-            else:
-                raise ValueError("undefined operation")
+            match cmd:
+                case "OVER":
+                    x = self.stack.popleft()
+                    y = self.stack[0]
+                    self.stack.extendleft([x, y])
+                case "SWAP":
+                    x = self.stack.popleft()
+                    y = self.stack.popleft()
+                    self.stack.extendleft([x, y])
+                case "DUP":
+                    self.stack.appendleft(self.stack[0])
+                case "DROP":
+                    self.stack.popleft()
+                case _:
+                    raise ValueError("undefined operation")
         except IndexError as ie:
             raise StackUnderflowError("Insufficient number of items in stack") from ie
 
