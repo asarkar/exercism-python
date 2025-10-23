@@ -56,7 +56,9 @@ def measure(capacity1: int, capacity2: int, goal: int, start_bucket: str) -> Buc
     raise ValueError("Can't do it.")
 
 
-def __next_moves(capacity1: int, capacity2: int, max_capacity1: int, max_capacity2: int) -> list[Move]:
+def __next_moves(
+    capacity1: int, capacity2: int, max_capacity1: int, max_capacity2: int
+) -> list[Move]:
     states: list[Move] = []
 
     if capacity1 > 0:

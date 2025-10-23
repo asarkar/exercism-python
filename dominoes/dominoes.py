@@ -1,5 +1,4 @@
 from collections import defaultdict
-from typing import Optional
 
 Domino = tuple[int, int]
 
@@ -50,7 +49,7 @@ class FaceValueMap:
 # corresponding domino indices as the values. According to the usual
 # backtracking paradigm, we need to acquire and release an index,
 # so we provide methods to do so.
-def can_chain(dominoes: list[Domino]) -> Optional[list[Domino]]:
+def can_chain(dominoes: list[Domino]) -> list[Domino] | None:
     result: list[Domino] = []
     fvm = FaceValueMap(dominoes)
 

@@ -1,5 +1,5 @@
 import operator
-from typing import Callable
+from collections.abc import Callable
 
 
 def largest(min_factor: int, max_factor: int) -> tuple[int | None, list[list[int]]]:

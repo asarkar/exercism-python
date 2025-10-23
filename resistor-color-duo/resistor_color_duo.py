@@ -23,4 +23,4 @@ def __color_code(color: str) -> int:
     # next takes an iterator as the first parameter and
     # (x for x in lst if ...) is a generator over the list lst
     # (which is an iterator).
-    return next((clr.value for clr in Color if clr.name.lower() == color))
+    return next(clr.value for clr in Color if clr.name.lower() == color)

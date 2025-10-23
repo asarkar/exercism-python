@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 
 class CustomSet:
-    def __init__(self, elements: Optional[list[Any]] = None) -> None:
+    def __init__(self, elements: list[Any] | None = None) -> None:
         self.elements = elements or []
 
     def __repr__(self) -> str:

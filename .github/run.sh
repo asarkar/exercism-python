@@ -29,10 +29,7 @@ while (( $# > 0 )); do
    esac
 done
 
-bin_dir=""
-if [[ "$OSTYPE" == "darwin"* ]]; then
-	bin_dir="./venv/bin/"
-fi
+bin_dir="$PWD/venv/bin/"
 
 basedir="${1:-.}"
 

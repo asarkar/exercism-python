@@ -1,72 +1,51 @@
-from collections import defaultdict, namedtuple
-from typing import Optional
-from enum import Enum, auto
+from collections import namedtuple
 
+# Tests expect this type.
 Point = namedtuple("Point", ["row", "col"])
 
 
-class Direction(Enum):
-    NORTH = auto()
-    SOUTH = auto()
-    EAST = auto()
-    WEST = auto()
-    NE = auto()
-    SE = auto()
-    NW = auto()
-    SW = auto()
-
-
 class WordSearch:
-    def __init__(self, puzzle: list[str]):
+    def __init__(self, puzzle: list[str]) -> None:
         self.puzzle = puzzle
-        self.start_indices = defaultdict(list)
-        for i, row in enumerate(puzzle):
-            for j, c in enumerate(row):
-                self.start_indices[c].append((i, j))
-
-    def search(self, word: str) -> Optional[tuple[Point, Point]]:
-        if not word:
-            return None
-
-        for row, col in self.start_indices.get(word[0], []):
-            if p := self.__search_end(word, 0, Point(row, col), set(), None):
-                return Point(col, row), p
-        return None
-
-    def __search_end(
-        self, word: str, i: int, coord: Point, visited: set[Point], direction: Optional[Direction]
-    ) -> Optional[Point]:
-        if i >= len(word) or coord in visited:
-            return None
-        if i == (len(word) - 1):
-            return Point(coord.col, coord.row)
-
-        visited.add(coord)
-        row, col = coord
-        candidates: list[tuple[Direction, tuple[int, int]]] = [
-            (Direction.NORTH, (row - 1, col)),
-            (Direction.SOUTH, (row + 1, col)),
-            (Direction.EAST, (row, col + 1)),
-            (Direction.WEST, (row, col - 1)),
-            (Direction.NE, (row - 1, col + 1)),
-            (Direction.SE, (row + 1, col + 1)),
-            (Direction.NW, (row - 1, col - 1)),
-            (Direction.SW, (row + 1, col - 1)),
+        self.m = len(puzzle)
+        self.n = len(puzzle[0]) if self.m > 0 else 0
+        # 8 possible search directions
+        self.directions = [
+            (-1, 0),
+            (-1, 1),
+            (0, 1),
+            (1, 1),
+            (1, 0),
+            (1, -1),
+            (0, -1),
+            (-1, -1),
         ]
 
-        neighbors = [
-            c
-            for c in candidates
-            if c[1] != coord
-            and 0 <= c[1][0] < len(self.puzzle)
-            and 0 <= c[1][1] < len(self.puzzle[c[1][0]])
-            and self.puzzle[c[1][0]][c[1][1]] == word[i + 1]
-            and c[1] not in visited
-            and direction in {None, c[0]}
-        ]
-        for d, (r, c) in neighbors:
-            if p := self.__search_end(word, i + 1, Point(r, c), visited, d):
-                return p
+    # `solve` finds all words in the puzzle, returning start and end coordinates.
+    def search(self, word: str) -> tuple[Point, Point] | None:
+        for row in range(self.m):
+            for col in range(self.n):
+                if (
+                    self.puzzle[row][col] == word[0]
+                    and (end := self.find_word(word, row, col)) is not None
+                ):
+                    return Point(col, row), Point(end[0], end[1])
 
-        visited.remove(coord)
         return None
+
+    # `find_word` checks all directions from a given starting point.
+    def find_word(self, word: str, row: int, col: int) -> tuple[int, int] | None:
+        for d in self.directions:
+            if (end := self.follow(word, row, col, d)) is not None:
+                return end
+        return None
+
+    # `follow` follows a fixed direction until the word is matched.
+    def follow(self, word: str, r: int, c: int, dir: tuple[int, int]) -> tuple[int, int] | None:
+        dr, dc = dir
+        for i in range(1, len(word)):
+            r += dr
+            c += dc
+            if r < 0 or r >= self.m or c < 0 or c >= self.n or self.puzzle[r][c] != word[i]:
+                return None
+        return c, r

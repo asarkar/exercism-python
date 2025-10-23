@@ -1,11 +1,10 @@
 import bisect
-from typing import Optional
 
 PLANTS = {p[0]: p for p in ["Clover", "Grass", "Radishes", "Violets"]}
 
 
 class Garden:
-    def __init__(self, diagram: str, students: Optional[list[str]] = None):
+    def __init__(self, diagram: str, students: list[str] | None = None):
         if students:
             self.students = students
         else:

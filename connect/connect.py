@@ -38,7 +38,11 @@ class ConnectGame:
             neighbors = [
                 (r, c)
                 for r, c in candidates
-                if 0 <= r < len(self.field) and 0 <= c < len(self.field[0]) and self.field[r][c] == player
+                if (
+                    0 <= r < len(self.field)
+                    and 0 <= c < len(self.field[0])
+                    and self.field[r][c] == player
+                )
             ]
             q.extend(neighbors)
 

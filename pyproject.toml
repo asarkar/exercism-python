@@ -1,19 +1,62 @@
 [project]
-requires-python = ">= 3.12"
+requires-python = ">= 3.13"
+name = "exercism-python"
+version = "0.0.1"
+dependencies = [
+  "parsy", "lark"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+lint = [
+    "ruff",
+    "mypy",
+]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-exclude
+exclude = [
+    "venv",
+    "build",
+    "^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$"
+]
+ignore_errors = false
+warn_return_any = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+line-length = 100
+extend-exclude = [
+    "**/test_*.py",
+    "**/*_test.py",
+    "build",
+    "*.egg-info"
+]
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+# zip-without-explicit-strict (B905)
+ignore = ["B905"]
 
 [tool.pytest.ini_options]
 markers = [
     "task"
 ]
-
-[tool.ruff]
-line-length = 120
-extend-exclude = ["**/test_*.py", "**/*_test.py"]
-
-[tool.mypy]
-# https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-exclude
-exclude = [
-    'venv',
-    '^(?:([^/]+/)+(?:test_.*.py|.*_test.py))$'
-]
-ignore_errors = 'False'

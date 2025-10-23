@@ -4,6 +4,19 @@ Feel free to open issues for questions, comments, or suggestions.
 
 [![](https://github.com/asarkar/exercism-python/workflows/CI/badge.svg)](https://github.com/asarkar/exercism-python/actions)
 
+## Development
+
+```
+% $(brew --prefix python)/bin/python3 -m venv ./venv
+
+% ./venv/bin/python -m pip install --upgrade pip '.[test]' '.[lint]'
+```
+
+To remove the local copy of the package `pydata`:
+```
+% ./venv/bin/python -m pip uninstall -y pydata
+```
+
 ## Running tests
 ```
 ./.github/run.sh <directory>

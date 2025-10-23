@@ -1,19 +1,19 @@
 from __future__ import annotations
-from typing import Optional
+
 import dataclasses
 
 
 @dataclasses.dataclass
 class Node:
     val: int
-    prev: Optional[Node]
-    nxt: Optional[Node]
+    prev: Node | None
+    nxt: Node | None
 
 
 class LinkedList:
     def __init__(self) -> None:
-        self.head: Optional[Node] = None
-        self.tail: Optional[Node] = None
+        self.head: Node | None = None
+        self.tail: Node | None = None
         self.size = 0
 
     def _singleton(self, val: int) -> None:

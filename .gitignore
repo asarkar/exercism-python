@@ -11,6 +11,11 @@
 __pycache__
 venv
 
+# pip
+build
+dist
+*.egg-info
+
 # Pytest
 .pytest_cache
 

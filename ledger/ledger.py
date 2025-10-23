@@ -2,7 +2,10 @@ from datetime import datetime
 from typing import NamedTuple
 
 COL_WIDTHS = [10, 25, 13]
-HEADERS = {"en_US": ["Date", "Description", "Change"], "nl_NL": ["Datum", "Omschrijving", "Verandering"]}
+HEADERS = {
+    "en_US": ["Date", "Description", "Change"],
+    "nl_NL": ["Datum", "Omschrijving", "Verandering"],
+}
 CURRENCY_SYMBOLS = {"USD": "$", "EUR": "€"}
 
 
@@ -24,7 +27,7 @@ class LedgerEntry(NamedTuple):
     def _fmt_desc(self) -> str:
         s = self.desc
         if len(s) > COL_WIDTHS[1]:
-            s = f"{self.desc[:COL_WIDTHS[1] - 3]}..."
+            s = f"{self.desc[: COL_WIDTHS[1] - 3]}..."
         return f"{s: <{COL_WIDTHS[1]}}"
 
     def _fmt_change(self, currency: str, locale: str) -> str:
@@ -38,10 +41,7 @@ class LedgerEntry(NamedTuple):
         symbol = CURRENCY_SYMBOLS[currency]
         match locale:
             case "en_US":
-                if self.change < 0:
-                    x = f"({symbol}{x})"
-                else:
-                    x = f"{symbol}{x} "
+                x = f"({symbol}{x})" if self.change < 0 else f"{symbol}{x} "
             case "nl_NL":
                 if self.change < 0:
                     x = "-" + x
@@ -49,7 +49,9 @@ class LedgerEntry(NamedTuple):
         return f"{x: >{COL_WIDTHS[2]}}"
 
     def fmt(self, currency: str, locale: str) -> str:
-        return " | ".join([self._fmt_date(locale), self._fmt_desc(), self._fmt_change(currency, locale)])
+        return " | ".join(
+            [self._fmt_date(locale), self._fmt_desc(), self._fmt_change(currency, locale)]
+        )
 
 
 def create_entry(date: str, description: str, change: int) -> LedgerEntry:

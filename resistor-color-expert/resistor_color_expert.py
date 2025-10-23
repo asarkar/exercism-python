@@ -1,5 +1,14 @@
 COLORS = ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"]
-TOLERANCES = {"grey": 0.05, "violet": 0.1, "blue": 0.25, "green": 0.5, "brown": 1, "red": 2, "gold": 5, "silver": 10}
+TOLERANCES = {
+    "grey": 0.05,
+    "violet": 0.1,
+    "blue": 0.25,
+    "green": 0.5,
+    "brown": 1,
+    "red": 2,
+    "gold": 5,
+    "silver": 10,
+}
 PREFIXES = [(10, "giga"), (7, "mega"), (4, "kilo"), (1, "")]
 
 

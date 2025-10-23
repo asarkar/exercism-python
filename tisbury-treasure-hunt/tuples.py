@@ -21,7 +21,9 @@ def convert_coordinate(coordinate: str) -> tuple[str, str]:
     return coordinate[0], coordinate[1]
 
 
-def compare_records(azara_record: tuple[str, str], rui_record: tuple[str, tuple[str, str], str]) -> bool:
+def compare_records(
+    azara_record: tuple[str, str], rui_record: tuple[str, tuple[str, str], str]
+) -> bool:
     """Compare two record types and determine if their coordinates match.
 
     :param azara_record: tuple - a (treasure, coordinate) pair.
@@ -39,7 +41,8 @@ def create_record(
 
     :param azara_record: tuple - a (treasure, coordinate) pair.
     :param rui_record: tuple - a (location, coordinate, quadrant) trio.
-    :return: tuple or str - the combined record (if compatible), or the string "not a match" (if incompatible).
+    :return: tuple or str - the combined record (if compatible), or the string "not a match"
+             (if incompatible).
     """
 
     if compare_records(azara_record, rui_record):

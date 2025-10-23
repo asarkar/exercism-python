@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+
 from char_reader import CharReader
 
 

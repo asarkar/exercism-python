@@ -1,27 +1,26 @@
 from __future__ import annotations
 
-import typing
-from typing import Optional, TypeAlias
 import dataclasses
+import typing
 from enum import Enum, auto
 
-Tree: TypeAlias = dict[str, "TreeValue"]
-TreeValue: TypeAlias = int | None | Tree
+type Tree = dict[str, "TreeValue"]
+type TreeValue = int | None | Tree
 
 
 @dataclasses.dataclass
 class Node:
     value: int
-    left: Optional[Node] = None
-    right: Optional[Node] = None
+    left: Node | None = None
+    right: Node | None = None
 
     @staticmethod
-    def from_tree(tree: Optional[Tree]) -> Node | None:
+    def from_tree(tree: Tree | None) -> Node | None:
         if tree is None:
             return None
         node = Node(typing.cast(int, tree["value"]))
-        node.left = Node.from_tree(typing.cast(Optional[Tree], tree["left"]))
-        node.right = Node.from_tree(typing.cast(Optional[Tree], tree["right"]))
+        node.left = Node.from_tree(typing.cast(Tree | None, tree["left"]))
+        node.right = Node.from_tree(typing.cast(Tree | None, tree["right"]))
         return node
 
     def to_tree(self) -> Tree:
@@ -47,7 +46,7 @@ class Crumb:
 
     value: int
     direction: Direction
-    node: Optional[Node] = None
+    node: Node | None = None
 
 
 Breadcrumbs = list[Crumb]
@@ -67,7 +66,7 @@ class Zipper:
     (long live Haskell!).
     """
 
-    def __init__(self, node: Node, breadcrumbs: Optional[Breadcrumbs] = None):
+    def __init__(self, node: Node, breadcrumbs: Breadcrumbs | None = None):
         assert node, "node must not be None"
         self.breadcrumbs = breadcrumbs or []
         self.node = node
@@ -92,7 +91,7 @@ class Zipper:
             )
         return None
 
-    def set_left(self, node: Optional[Tree]) -> Zipper:
+    def set_left(self, node: Tree | None) -> Zipper:
         return Zipper(Node(self.value(), Node.from_tree(node), self.node.right), self.breadcrumbs)
 
     def right(self) -> Zipper | None:
@@ -103,7 +102,7 @@ class Zipper:
             )
         return None
 
-    def set_right(self, node: Optional[Tree]) -> Zipper:
+    def set_right(self, node: Tree | None) -> Zipper:
         return Zipper(Node(self.value(), self.node.left, Node.from_tree(node)), self.breadcrumbs)
 
     def up(self) -> Zipper | None:

@@ -1,8 +1,8 @@
 import io
-from types import TracebackType
-from typing import Type, Self, Any
-from socket import socket
 from collections.abc import Iterator
+from socket import socket
+from types import TracebackType
+from typing import Any, Self
 
 
 class MeteredFile(io.BufferedRandom):
@@ -17,7 +17,7 @@ class MeteredFile(io.BufferedRandom):
 
     def __exit__(
         self,
-        exc_type: Type[BaseException] | None,
+        exc_type: type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> None:
@@ -89,7 +89,7 @@ class MeteredSocket:
 
     def __exit__(
         self,
-        exc_type: Type[BaseException] | None,
+        exc_type: type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> None:

@@ -4,7 +4,7 @@ import dataclasses
 import functools
 import typing
 
-from lark import Lark, Transformer, Token, UnexpectedCharacters, UnexpectedToken
+from lark import Lark, Token, Transformer, UnexpectedCharacters, UnexpectedToken
 
 
 @dataclasses.dataclass
@@ -97,7 +97,9 @@ class SgfTransformer(Transformer[Token, list[SgfTree]]):
             if isinstance(nodes[i + 1], SgfTree):
                 node.children.append(typing.cast(SgfTree, nodes[i + 1]))
             else:
-                node.children.extend([child[0] for child in typing.cast(list[list[SgfTree]], nodes[i + 1 :])])
+                node.children.extend(
+                    [child[0] for child in typing.cast(list[list[SgfTree]], nodes[i + 1 :])]
+                )
                 break
 
         return typing.cast(list[SgfTree], nodes[:1])

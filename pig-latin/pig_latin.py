@@ -13,7 +13,10 @@ CONSONANTS = f"[^{VOWELS}]"
 def translate_word(word: str) -> str:
     parts = re.split(rf"({VOWELS}|{CONSONANTS}*qu|xr|y)", word)
     parts = [w for w in parts if w]
-    if not (re.match(rf"^{VOWELS}|xr", parts[0]) or (parts[0] == "y" and re.match(rf"^{CONSONANTS}", parts[1]))):
+    if not (
+        re.match(rf"^{VOWELS}|xr", parts[0])
+        or (parts[0] == "y" and re.match(rf"^{CONSONANTS}", parts[1]))
+    ):
         fst = parts.pop(0)
         parts.append(fst)
 

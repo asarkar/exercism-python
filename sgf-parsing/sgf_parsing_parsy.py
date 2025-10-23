@@ -3,9 +3,19 @@ from __future__ import annotations
 import dataclasses
 import functools
 import typing
-from typing import Generator, Any
+from collections.abc import Generator
+from typing import Any
 
-from parsy import regex, seq, string, generate, any_char, test_char, ParseError, Parser  # type: ignore
+from parsy import (  # type: ignore
+    ParseError,
+    Parser,
+    any_char,
+    generate,
+    regex,
+    seq,
+    string,
+    test_char,
+)
 
 
 @dataclasses.dataclass

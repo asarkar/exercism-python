@@ -3,7 +3,7 @@ class Matrix:
         self._rows: list[list[int]] = []
         self._cols: list[list[int]] = []
 
-        for row_idx, row in enumerate(matrix_string.splitlines()):
+        for row in matrix_string.splitlines():
             self._rows.append([])
             for col_idx, item in enumerate(row.split()):
                 i = int(item)

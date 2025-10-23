@@ -22,7 +22,8 @@ def count_failed_students(student_scores: list[int]) -> int:
 
 
 def above_threshold(student_scores: list[int], threshold: int) -> list[int]:
-    """Determine how many of the provided student scores were 'the best' based on the provided threshold.
+    """Determine how many of the provided student scores were 'the best' based on the provided
+        threshold.
 
     :param student_scores: list - of integer scores.
     :param threshold: int - threshold to cross to be the "best" score.
@@ -65,7 +66,8 @@ Info = list[str | int]
 
 
 def perfect_score(student_info: list[Info]) -> Info:
-    """Create a list that contains the name and grade of the first student to make a perfect score on the exam.
+    """Create a list that contains the name and grade of the first student to make a perfect score
+        on the exam.
 
     :param student_info: list - of [<student name>, <score>] lists.
     :return: list - first `[<student name>, 100]` or `[]` if no student score of 100 is found.

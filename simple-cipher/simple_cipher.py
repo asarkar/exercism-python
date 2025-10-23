@@ -2,11 +2,11 @@ import itertools
 import operator
 import random
 import string
-from typing import Callable, Optional
+from collections.abc import Callable
 
 
 class Cipher:
-    def __init__(self, key: Optional[str] = None) -> None:
+    def __init__(self, key: str | None = None) -> None:
         if key:
             self.key = key
         else:

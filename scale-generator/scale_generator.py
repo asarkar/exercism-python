@@ -16,7 +16,22 @@ class Scale:
     def interval(self, intervals: str) -> list[str]:
         # Find the scale to use.
         match self._tonic:
-            case "C" | "a" | "G" | "D" | "A" | "E" | "B" | "F#" | "e" | "b" | "f#" | "c#" | "g#" | "d#":
+            case (
+                "C"
+                | "a"
+                | "G"
+                | "D"
+                | "A"
+                | "E"
+                | "B"
+                | "F#"
+                | "e"
+                | "b"
+                | "f#"
+                | "c#"
+                | "g#"
+                | "d#"
+            ):
                 chromatic_scale = Scale.SHARPS
             case "F" | "Bb" | "Eb" | "Ab" | "Db" | "Gb" | "d" | "g" | "c" | "f" | "bb" | "eb":
                 chromatic_scale = Scale.FLATS

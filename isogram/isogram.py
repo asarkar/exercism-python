@@ -1,5 +1,5 @@
-from collections import Counter
 import string
+from collections import Counter
 
 
 def is_isogram(text: str) -> bool:

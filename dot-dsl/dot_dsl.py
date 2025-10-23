@@ -54,6 +54,10 @@ class Graph:
 
     @staticmethod
     def __parse_edge(item: Any) -> Edge:
-        if len(item) != 4 or any(not isinstance(x, str) for x in item[1:3]) or not isinstance(item[3], dict):
+        if (
+            len(item) != 4
+            or any(not isinstance(x, str) for x in item[1:3])
+            or not isinstance(item[3], dict)
+        ):
             raise ValueError("Edge is malformed")
         return Edge(*item[1:])

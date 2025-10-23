@@ -1,5 +1,4 @@
 from threading import RLock
-from typing import Optional
 
 
 # Some community solutions using decorators:
@@ -7,7 +6,7 @@ from typing import Optional
 # https://exercism.org/tracks/python/exercises/bank-account/solutions/FergusonTG
 class BankAccount:
     def __init__(self) -> None:
-        self._balance: Optional[int] = None
+        self._balance: int | None = None
         self._lock = RLock()
 
     # Don't need to synchronize here.

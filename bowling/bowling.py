@@ -16,10 +16,7 @@ class BowlingGame:
         if pins < 0:
             raise ValueError("invalid pins")
 
-        if not self.frames or self.frames[-1].is_complete():
-            frame = Frame()
-        else:
-            frame = self.frames.pop()
+        frame = Frame() if not self.frames or self.frames[-1].is_complete() else self.frames.pop()
 
         if frame.score() + pins > 10:
             raise ValueError("not enough pins left")

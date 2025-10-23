@@ -1,8 +1,8 @@
 import bisect
 import operator
 import re
-from typing import Optional, Callable
 from collections import defaultdict, deque
+from collections.abc import Callable
 
 
 class StackUnderflowError(Exception):
@@ -47,7 +47,7 @@ class Forth:
 
     # Parse ": word-name definition ;".
     @classmethod
-    def parse_defn(cls, txt: str) -> Optional[tuple[str, list[str]]]:
+    def parse_defn(cls, txt: str) -> tuple[str, list[str]] | None:
         if txt[0] != ":":
             return None
         if (m := re.match(cls.WORD, txt, re.VERBOSE)) is not None:
@@ -121,7 +121,7 @@ class Forth:
             self.run_stack_op(cmd)
 
     def run_bin_op(self, cmd: str) -> None:
-        op: Optional[Callable[[int, int], int]] = None
+        op: Callable[[int, int], int] | None = None
         match cmd:
             case "+":
                 op = operator.add

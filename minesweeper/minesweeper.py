@@ -43,7 +43,9 @@ def __bfs(field: list[list[str]], start: tuple[int, int]) -> None:
         # we don't need to look at previous cells.
         # Otherwise, we may run into an infinite loop where a
         # blank cell is repeatedly put on the queue.
-        empties = [x for x in neighbors if field[x[0]][x[1]] == BLANK and x[0] >= row and x[1] >= col]
+        empties = [
+            x for x in neighbors if field[x[0]][x[1]] == BLANK and x[0] >= row and x[1] >= col
+        ]
         num_mines = sum(1 for x in neighbors if field[x[0]][x[1]] == MINE)
         if num_mines:
             field[row][col] = str(num_mines)

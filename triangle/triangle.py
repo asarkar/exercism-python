@@ -5,7 +5,7 @@ def equilateral(sides: list[int]) -> bool:
 
 def isosceles(sides: list[int]) -> bool:
     a, b, c = sides
-    return __is_valid(sides) and (a == b or b == c or a == c)
+    return __is_valid(sides) and (a in (b, c) or b == c)
 
 
 def scalene(sides: list[int]) -> bool:

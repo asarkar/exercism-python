@@ -1,7 +1,5 @@
-from typing import TypeAlias
-
-Array: TypeAlias = list["ArrayValue"]
-ArrayValue: TypeAlias = int | None | Array
+type Array = list["ArrayValue"]
+type ArrayValue = int | None | Array
 
 
 def flatten(iterable: Array) -> list[int]:

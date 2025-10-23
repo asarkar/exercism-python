@@ -1,24 +1,24 @@
 from __future__ import annotations
-from typing import Optional
+
 from collections.abc import Iterator
 
 
 class Node:
     def __init__(self, val: int) -> None:
         self.val = val
-        self.nxt: Optional[Node] = None
+        self.nxt: Node | None = None
 
     def value(self) -> int:
         return self.val
 
-    def next(self) -> Optional[Node]:
+    def next(self) -> Node | None:
         return self.nxt
 
 
 class LinkedList:
-    def __init__(self, values: Optional[list[int]] = None) -> None:
+    def __init__(self, values: list[int] | None = None) -> None:
         self.size = 0
-        self.fst: Optional[Node] = None
+        self.fst: Node | None = None
 
         if values:
             for v in values:

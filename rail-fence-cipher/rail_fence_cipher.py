@@ -1,5 +1,6 @@
 from collections import deque
-from typing import Callable, Any
+from collections.abc import Callable
+from typing import Any
 
 
 def encode(message: str, num_rails: int) -> str:

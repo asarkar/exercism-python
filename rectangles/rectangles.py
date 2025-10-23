@@ -1,6 +1,6 @@
-from collections import defaultdict
 import itertools
 import re
+from collections import defaultdict
 
 
 # A cool community solution: https://exercism.org/tracks/python/exercises/rectangles/solutions/pnowosie
@@ -36,7 +36,8 @@ def rectangles(strings: list[str]) -> int:
         for length, rows in segments.items():
             for top_row, bottom_row in itertools.combinations(rows, 2):
                 cols = [
-                    f"{strings[row][col]}{strings[row][col + length - 1]}" for row in range(top_row, bottom_row + 1)
+                    f"{strings[row][col]}{strings[row][col + length - 1]}"
+                    for row in range(top_row, bottom_row + 1)
                 ]
                 if re.fullmatch(r"\+[+|]*\+", "".join(cols)):
                     num_rect += 1

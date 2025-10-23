@@ -1,8 +1,7 @@
 import itertools
-from typing import Optional
 
 
-def proverb(*inputs: str, qualifier: Optional[str]) -> list[str]:
+def proverb(*inputs: str, qualifier: str | None) -> list[str]:
     if not inputs:
         return []
     rhyme: list[str] = []

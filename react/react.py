@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import itertools
 import typing
-from collections import deque
 from abc import ABC
-from typing import Callable
+from collections import deque
+from collections.abc import Callable
 
 
 # A cool community solution: https://exercism.org/tracks/python/exercises/react/solutions/rcardenes
-class Cell(ABC):
+class Cell(ABC):  # noqa: B024
     def __init__(self, value: int | None = None) -> None:
         if self.__class__ == Cell:
             raise TypeError("Cannot instantiate abstract class.")
@@ -86,7 +86,9 @@ class InputCell(Cell):
                 dist = max(distance.get(x, (-1, child))[0], distance[id(cell)][0] + 1)
                 distance[x] = (dist, child)
 
-        for dist, group in itertools.groupby(sorted(distance.values(), key=lambda x: x[0]), key=lambda x: x[0]):
+        for dist, group in itertools.groupby(
+            sorted(distance.values(), key=lambda x: x[0]), key=lambda x: x[0]
+        ):
             if dist == 0:  # Input cell
                 continue
             for _, c in group:

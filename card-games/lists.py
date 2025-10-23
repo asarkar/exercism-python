@@ -47,7 +47,8 @@ def card_average(hand: list[int]) -> float:
 
 
 def approx_average_is_average(hand: list[int]) -> bool:
-    """Return if an average is using (first + last index values ) OR ('middle' card) == calculated average.
+    """Return if an average is using (first + last index values ) OR ('middle' card) ==
+        calculated average.
 
     :param hand: list - cards in hand.
     :return: bool - does one of the approximate averages equal the `true average`?

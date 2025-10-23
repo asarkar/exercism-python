@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Optional
+from typing import Any
 
 
 class User:
     def __init__(
         self,
         name: str,
-        owes: Optional[dict[str, float]] = None,
-        owed_by: Optional[dict[str, float]] = None,
+        owes: dict[str, float] | None = None,
+        owed_by: dict[str, float] | None = None,
         balance: float = 0.0,
     ) -> None:
         self.name = name
@@ -33,13 +33,10 @@ class RestAPI:
             user = User(**u)
             self._database[user.name] = user
 
-    def get(self, url: str, payload: Optional[str] = None) -> str:
+    def get(self, url: str, payload: str | None = None) -> str:
         if url != "/users":
             raise NotImplementedError
-        if payload is None:
-            names = sorted(self._database)
-        else:
-            names = sorted(json.loads(payload)["users"])
+        names = sorted(self._database) if payload is None else sorted(json.loads(payload)["users"])
 
         users = [vars(self._database[name]) for name in names]
         return json.dumps({"users": users})
